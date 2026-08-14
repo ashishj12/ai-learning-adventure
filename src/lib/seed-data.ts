@@ -105,6 +105,35 @@ export const missions: SeedMission[] = [
         explanation:
           "AI systems don't have independent goals or intentions - they produce outputs based on patterns learned during training and the input they're given.",
       },
+      {
+        type: "mcq",
+        question: "What is 'training data' in the context of AI?",
+        options: [
+          "Data the AI will process after it's deployed",
+          "Examples used to teach an AI system patterns before it's used",
+          "Passwords needed to access the AI",
+          "The total number of users of the AI system",
+        ],
+        correctAnswer:
+          "Examples used to teach an AI system patterns before it's used",
+        explanation:
+          "Training data is the dataset an AI learns from during development to recognize patterns and make predictions.",
+      },
+      {
+        type: "scenario",
+        question:
+          "You notice an AI makes mistakes in a specific area (like identifying certain objects). What would likely help improve it?",
+        options: [
+          "Training it on more diverse, higher-quality examples in that area",
+          "Asking it to work faster",
+          "Hiding the mistakes from users",
+          "Completely removing that feature",
+        ],
+        correctAnswer:
+          "Training it on more diverse, higher-quality examples in that area",
+        explanation:
+          "Better training data directly improves AI performance in weak areas.",
+      },
     ],
     flashcards: [
       {
@@ -128,6 +157,21 @@ export const missions: SeedMission[] = [
         example:
           "Millions of labeled photos used to teach a face-detection model.",
         tip: "An AI is only as good as the data it was trained on.",
+      },
+      {
+        concept: "Pattern Recognition",
+        definition:
+          "The core function of AI - identifying regularities in data that can be used for prediction.",
+        example:
+          "Recognizing that emails with certain word combinations are usually spam.",
+        tip: "All AI, at its core, is sophisticated pattern matching.",
+      },
+      {
+        concept: "Model",
+        definition:
+          "The trained AI system that has learned patterns and is ready to make predictions.",
+        example: "A face-recognition model deployed in a phone's camera app.",
+        tip: "Think of it as a tool that applies learned patterns to new situations.",
       },
     ],
   },
@@ -211,6 +255,36 @@ export const missions: SeedMission[] = [
         explanation:
           "Generative AI spans many content types: text, images, audio, video, and code are all common outputs.",
       },
+      {
+        type: "mcq",
+        question:
+          "If you ask an image generator to create something it has never seen exactly before, how is it possible?",
+        options: [
+          "It's not possible, it can only reproduce existing images",
+          "It combines learned visual patterns in new ways, guided by your description",
+          "A human artist draws it secretly",
+          "It searches the entire internet instantly",
+        ],
+        correctAnswer:
+          "It combines learned visual patterns in new ways, guided by your description",
+        explanation:
+          "Generative models learn the building blocks of visual patterns and can combine them in novel ways guided by your prompt.",
+      },
+      {
+        type: "scenario",
+        question:
+          "You use a generative AI to create a unique logo, but someone claims you just used an AI to steal existing artwork. How would you respond?",
+        options: [
+          "They're right, generative AI only copies existing work",
+          "Generative AI generates novel combinations based on patterns, though it does train on existing artwork",
+          "Generative AI creates completely random outputs",
+          "This situation is impossible",
+        ],
+        correctAnswer:
+          "Generative AI generates novel combinations based on patterns, though it does train on existing artwork",
+        explanation:
+          "A nuanced answer: generative models create new outputs but are trained on existing works, so there are legitimate questions about data use and attribution.",
+      },
     ],
     flashcards: [
       {
@@ -236,6 +310,22 @@ export const missions: SeedMission[] = [
         example:
           "One tool that can turn a text prompt into both an image and a matching caption.",
         tip: "Modern generative tools increasingly combine multiple content types.",
+      },
+      {
+        concept: "Prompt-guided creation",
+        definition:
+          "Generative AI that uses your text description to steer what kind of new content to create.",
+        example:
+          "'A sunset over mountains in oil painting style' guides the image generator.",
+        tip: "Better prompts = better creative outputs.",
+      },
+      {
+        concept: "Sampling and creativity",
+        definition:
+          "Generative models use randomness to create variety - the same prompt can produce different outputs.",
+        example:
+          "Asking for 'a poem about winter' multiple times produces different poems each time.",
+        tip: "This randomness is what makes generative AI feel creative rather than mechanical.",
       },
     ],
   },
@@ -319,6 +409,36 @@ export const missions: SeedMission[] = [
         explanation:
           "This is the core mechanism of autoregressive text generation used by LLMs.",
       },
+      {
+        type: "mcq",
+        question:
+          "Why is 'Large' an important part of the name 'Large Language Model'?",
+        options: [
+          "It can display text on large screens",
+          "It processes large documents only",
+          "The size of parameters and training data enables better language understanding",
+          "It requires a large physical server room",
+        ],
+        correctAnswer:
+          "The size of parameters and training data enables better language understanding",
+        explanation:
+          "Scale (billions of parameters + massive datasets) is directly linked to LLM capability.",
+      },
+      {
+        type: "scenario",
+        question:
+          "An LLM starts a response, but the user cuts off the generation mid-sentence. Why did this happen?",
+        options: [
+          "The LLM ran out of tokens in the context window",
+          "The user or system stopped generation before it naturally finished",
+          "The model had an error",
+          "All of the above are possible",
+        ],
+        correctAnswer:
+          "The user or system stopped generation before it naturally finished",
+        explanation:
+          "LLMs generate token by token until instructed to stop, a length limit is reached, or the context window fills - any of these can cause mid-sentence cuts.",
+      },
     ],
     flashcards: [
       {
@@ -343,6 +463,22 @@ export const missions: SeedMission[] = [
         example:
           "Predicting 'mat' after 'The cat sat on the' one word at a time.",
         tip: "This is why LLM responses can be cut off mid-thought if generation stops early.",
+      },
+      {
+        concept: "Sequence-to-sequence prediction",
+        definition:
+          "The LLM mechanism of taking an input sequence and predicting a plausible output sequence.",
+        example:
+          "Input: 'Translate to Spanish: Hello' → Output predicted token by token.",
+        tip: "This applies to any task framed as predicting the next reasonable text.",
+      },
+      {
+        concept: "Context window (for LLMs)",
+        definition:
+          "The maximum length of input text an LLM can consider when generating a response.",
+        example:
+          "An 8K context window can fit about 6,000 words of conversation.",
+        tip: "Longer conversations require summarization or must drop old content.",
       },
     ],
   },
@@ -427,6 +563,34 @@ export const missions: SeedMission[] = [
         explanation:
           "Negative constraints help narrow the output space and avoid unwanted style or content.",
       },
+      {
+        type: "mcq",
+        question:
+          "Which technique involves showing the AI a few examples of the output style you want?",
+        options: [
+          "Zero-shot prompting",
+          "Few-shot prompting",
+          "Random prompting",
+          "Brute-force prompting",
+        ],
+        correctAnswer: "Few-shot prompting",
+        explanation:
+          "Few-shot prompting uses examples to demonstrate the desired style, and is usually more effective than just describing what you want.",
+      },
+      {
+        type: "scenario",
+        question:
+          "You've been iterating on prompts for a while and each tweak produces slightly better results. What's the name of this process?",
+        options: [
+          "Random guessing",
+          "Prompt hacking",
+          "Iterative prompting / prompt refinement",
+          "Trial and error has no name",
+        ],
+        correctAnswer: "Iterative prompting / prompt refinement",
+        explanation:
+          "Refining prompts based on results is a core technique called iterative prompting.",
+      },
     ],
     flashcards: [
       {
@@ -451,6 +615,21 @@ export const missions: SeedMission[] = [
           "Refining your prompt based on the AI's previous response until you get what you need.",
         example: "Asking for 'a simpler version' after a too-technical answer.",
         tip: "Treat the first response as a draft, not a final answer.",
+      },
+      {
+        concept: "Zero-shot prompting",
+        definition:
+          "Asking an AI to do a task with no examples - just a description of what you want.",
+        example: "'Write a haiku about coffee' with no examples provided.",
+        tip: "Works for straightforward tasks, but examples help for complex style requirements.",
+      },
+      {
+        concept: "Chain-of-thought prompting",
+        definition:
+          "Asking the AI to explain its reasoning step-by-step, which often improves accuracy.",
+        example:
+          "'Solve this math problem. Show your work step by step.' instead of just 'What's 15 × 8?'",
+        tip: "Asking for 'thinking' often produces better results than just the answer.",
       },
     ],
   },
@@ -534,6 +713,35 @@ export const missions: SeedMission[] = [
         explanation:
           "Longer or less common words are frequently split into multiple sub-word tokens rather than staying as one token.",
       },
+      {
+        type: "mcq",
+        question:
+          "Roughly, how many characters of English text equal one token?",
+        options: [
+          "Exactly 1 character",
+          "About 2-3 characters",
+          "About 4 characters",
+          "Always 10+ characters",
+        ],
+        correctAnswer: "About 4 characters",
+        explanation:
+          "A rough rule of thumb is that 1 token ≈ 4 characters of English text, though this varies.",
+      },
+      {
+        type: "scenario",
+        question:
+          "You want to ask an AI a question about a very long PDF, but you're worried it will exceed the context window. What's a good strategy?",
+        options: [
+          "Just try it and hope for the best",
+          "Ask the AI to summarize the document first, then ask follow-up questions about the summary",
+          "Give up and don't use AI for this task",
+          "Print the document and read it yourself",
+        ],
+        correctAnswer:
+          "Ask the AI to summarize the document first, then ask follow-up questions about the summary",
+        explanation:
+          "Breaking long content into chunks (summarize first, then explore) is a practical strategy to work within context windows.",
+      },
     ],
     flashcards: [
       {
@@ -558,6 +766,22 @@ export const missions: SeedMission[] = [
         example:
           "A chatbot losing track of instructions given very early in a long chat.",
         tip: "For long tasks, periodically restate key instructions or facts.",
+      },
+      {
+        concept: "Tokenization",
+        definition:
+          "The process of breaking text into tokens that a model can process.",
+        example:
+          "Splitting 'Good morning!' into tokens like 'Good', 'morning', '!'",
+        tip: "Different models may tokenize the same text slightly differently.",
+      },
+      {
+        concept: "Token count",
+        definition:
+          "The number of tokens in a piece of text or a conversation so far.",
+        example:
+          "A 50-word paragraph might be 60-70 tokens depending on word length.",
+        tip: "Knowing token count helps you estimate how much 'room' you have left in a context window.",
       },
     ],
   },
@@ -640,6 +864,36 @@ export const missions: SeedMission[] = [
         explanation:
           "A model can hallucinate citations too - asking for sources helps you verify, but doesn't guarantee accuracy on its own.",
       },
+      {
+        type: "mcq",
+        question:
+          "Which domain is most likely to trigger hallucinations from an AI?",
+        options: [
+          "Well-known historical facts",
+          "Highly specific recent statistics, niche citations, or current events the model wasn't trained on",
+          "Basic math and definitions",
+          "Proverbs and famous quotes",
+        ],
+        correctAnswer:
+          "Highly specific recent statistics, niche citations, or current events the model wasn't trained on",
+        explanation:
+          "Hallucinations are most common when a model is forced to answer on topics it doesn't actually have reliable information about.",
+      },
+      {
+        type: "scenario",
+        question:
+          "You ask an AI for the name of a famous researcher and their main contribution, and it gives a confident-sounding answer. What's your best strategy?",
+        options: [
+          "Assume it's correct because it's so confident",
+          "Independently verify the researcher's name and work before citing it",
+          "Ask the AI a second time and average the answers",
+          "Assume all AI answers about people are wrong",
+        ],
+        correctAnswer:
+          "Independently verify the researcher's name and work before citing it",
+        explanation:
+          "Verification is the only reliable defense against hallucination, especially for specific factual claims.",
+      },
     ],
     flashcards: [
       {
@@ -664,6 +918,22 @@ export const missions: SeedMission[] = [
         example:
           "Cross-checking an AI's statistic against the original government report.",
         tip: "Treat AI output on specific facts as a draft to verify, not a final answer.",
+      },
+      {
+        concept: "Confidence ≠ Accuracy",
+        definition:
+          "An AI may sound very sure about something while actually being completely wrong.",
+        example:
+          "An AI confidently stating a fictional person did something real-sounding.",
+        tip: "Human-like confidence doesn't mean the information is accurate.",
+      },
+      {
+        concept: "Knowledge Gaps",
+        definition:
+          "Topics or facts the AI doesn't have reliable information about, even if it will try to answer.",
+        example:
+          "Very recent events, obscure research, or non-public information.",
+        tip: "Hallucinations often happen when you ask outside the model's knowledge zone.",
       },
     ],
   },
@@ -746,6 +1016,36 @@ export const missions: SeedMission[] = [
         explanation:
           "Fairness testing across groups helps catch biased outcomes before they affect real people in consequential decisions.",
       },
+      {
+        type: "mcq",
+        question:
+          "If you notice an AI system seems to favor one demographic group in its outputs, what's the first responsible step?",
+        options: [
+          "Ignore it and use the system anyway",
+          "Stop using AI entirely",
+          "Document the bias, investigate the cause, and consider how to fix or mitigate it",
+          "Blame the users for being sensitive",
+        ],
+        correctAnswer:
+          "Document the bias, investigate the cause, and consider how to fix or mitigate it",
+        explanation:
+          "Recognizing, documenting, and addressing bias is how responsible AI improves over time.",
+      },
+      {
+        type: "scenario",
+        question:
+          "A company uses AI to recommend job candidates. To ensure fairness, what should they do?",
+        options: [
+          "Trust the AI completely and hire its top recommendation automatically",
+          "Ignore AI suggestions and hire only from manual applications",
+          "Use AI as one input, audit for demographic fairness, and maintain human review of final hiring decisions",
+          "Hire randomly to avoid any systematic bias",
+        ],
+        correctAnswer:
+          "Use AI as one input, audit for demographic fairness, and maintain human review of final hiring decisions",
+        explanation:
+          "Responsible AI in consequential decisions combines AI tools with fairness audits and human judgment.",
+      },
     ],
     flashcards: [
       {
@@ -771,6 +1071,22 @@ export const missions: SeedMission[] = [
         example:
           "Comparing loan-approval rates suggested by an AI tool across different demographic groups.",
         tip: "Fairness issues are often invisible until you specifically test for them.",
+      },
+      {
+        concept: "Training Data Imbalance",
+        definition:
+          "When training data over-represents or under-represents certain groups or perspectives.",
+        example:
+          "A facial recognition model trained mostly on certain skin tones performs worse on others.",
+        tip: "Balanced, representative data is key to reducing AI bias.",
+      },
+      {
+        concept: "Mitigation Strategies",
+        definition:
+          "Techniques to reduce bias in AI systems, like diverse data, fairness testing, or human oversight.",
+        example:
+          "Augmenting training data with underrepresented groups, then testing for fairness.",
+        tip: "No perfect solution - mitigation is an ongoing practice.",
       },
     ],
   },
@@ -854,6 +1170,36 @@ export const missions: SeedMission[] = [
         explanation:
           "RAG significantly reduces hallucination risk by grounding answers in real documents, but it doesn't guarantee perfect accuracy - the model can still misinterpret retrieved content.",
       },
+      {
+        type: "mcq",
+        question:
+          "What is the main advantage of RAG over asking an LLM a question directly?",
+        options: [
+          "It's faster",
+          "It grounds the answer in real, current documents rather than relying only on training knowledge",
+          "It requires no AI model at all",
+          "It eliminates the need for human review",
+        ],
+        correctAnswer:
+          "It grounds the answer in real, current documents rather than relying only on training knowledge",
+        explanation:
+          "The key win of RAG is access to current, specific source material that the model was never trained on directly.",
+      },
+      {
+        type: "scenario",
+        question:
+          "A company's internal documentation changes frequently, but users ask an AI chatbot questions. Why is RAG a good solution?",
+        options: [
+          "It retains all memory automatically",
+          "It retrieves the latest documentation at query time, staying current without retraining",
+          "It makes the company's AI faster",
+          "It prevents users from asking questions",
+        ],
+        correctAnswer:
+          "It retrieves the latest documentation at query time, staying current without retraining",
+        explanation:
+          "RAG's live retrieval lets systems stay current without expensive retraining cycles.",
+      },
     ],
     flashcards: [
       {
@@ -879,6 +1225,297 @@ export const missions: SeedMission[] = [
         example:
           "A model trained through early 2026 won't natively know about events from later in the year.",
         tip: "RAG is one of the main ways to work around a fixed knowledge cutoff.",
+      },
+      {
+        concept: "Retrieval + Generation pipeline",
+        definition:
+          "The two-step RAG process: first retrieve relevant documents, then use them as context for generation.",
+        example:
+          "Search customer support tickets → feed top 3 matches into an LLM → generate personalized answer.",
+        tip: "The quality of retrieved documents directly affects output quality.",
+      },
+      {
+        concept: "Live versus Stale Knowledge",
+        definition:
+          "RAG uses live retrieval for current data; pure LLMs are limited to training-time knowledge.",
+        example:
+          "RAG can answer 'what's the latest policy?' by retrieving today's document; an LLM guesses from training.",
+        tip: "This is why RAG is crucial for any system where information changes frequently.",
+      },
+    ],
+  },
+
+  // 9 -----------------------------------------------------------------------
+  {
+    slug: "fine-tuning-and-transfer-learning",
+    title: "Fine-tuning and Transfer Learning",
+    level: "Builder Mindset",
+    objective:
+      "Understand how to customize pre-trained AI models for specific tasks without retraining from scratch.",
+    lessonContent:
+      "Fine-tuning is the process of taking a pre-trained model and training it further on a smaller, task-specific dataset to adapt it to your needs. Transfer learning is the broader concept of using knowledge learned on one task to improve performance on another.\n\nInstead of training a massive model from scratch (which requires enormous compute and data), you start with a foundation model already trained on billions of examples, then refine it with just hundreds or thousands of your own examples. This is much faster and cheaper, and often produces better results than training from scratch, because the model already understands general language, images, or code patterns.",
+    scenario:
+      "A medical company has a pre-trained text model but needs it to understand medical terminology and clinical scenarios better. Rather than training a new model from scratch, they fine-tune the existing model on 5,000 labeled medical documents - a fraction of what full training would require.",
+    badge: {
+      name: "Model Customizer",
+      description: "Learned how to adapt AI models for specific tasks.",
+      icon: "cog",
+    },
+    quiz: [
+      {
+        type: "mcq",
+        question: "What is fine-tuning in the context of AI model development?",
+        options: [
+          "Training a model from scratch with no prior knowledge",
+          "Taking a pre-trained model and training it further on task-specific data",
+          "Making the model run faster with no accuracy changes",
+          "Randomly adjusting model settings",
+        ],
+        correctAnswer:
+          "Taking a pre-trained model and training it further on task-specific data",
+        explanation:
+          "Fine-tuning adapts an existing trained model to your specific use case by training it on your data.",
+      },
+      {
+        type: "true_false",
+        question:
+          "Fine-tuning a model typically requires more data than training from scratch.",
+        options: ["True", "False"],
+        correctAnswer: "False",
+        explanation:
+          "Fine-tuning needs much less data than training from scratch because the model already knows general patterns.",
+      },
+      {
+        type: "mcq",
+        question: "What is 'transfer learning'?",
+        options: [
+          "Copying one model's code into another",
+          "Using knowledge learned on one task to improve performance on another task",
+          "Moving a model from one computer to another",
+          "Teaching a human to use AI",
+        ],
+        correctAnswer:
+          "Using knowledge learned on one task to improve performance on another task",
+        explanation:
+          "Transfer learning leverages patterns learned in one domain to speed up learning in a related domain.",
+      },
+      {
+        type: "scenario",
+        question:
+          "You want to build a model that classifies customer support tickets by urgency, but you have only 500 labeled examples. What's a practical approach?",
+        options: [
+          "Collect 100,000 examples to train a model from scratch",
+          "Use transfer learning: start with a pre-trained language model and fine-tune it on your 500 examples",
+          "Give up because 500 examples is too few",
+          "Manually classify every incoming ticket forever",
+        ],
+        correctAnswer:
+          "Use transfer learning: start with a pre-trained language model and fine-tune it on your 500 examples",
+        explanation:
+          "With transfer learning, 500 examples is often sufficient to fine-tune a pre-trained model effectively.",
+      },
+      {
+        type: "true_false",
+        question:
+          "Fine-tuning always requires retraining every parameter in the model.",
+        options: ["True", "False"],
+        correctAnswer: "False",
+        explanation:
+          "Often, only the final layers are fine-tuned while earlier layers remain frozen, making training faster.",
+      },
+      {
+        type: "mcq",
+        question:
+          "Why is fine-tuning usually more practical than training a model from scratch?",
+        options: [
+          "It's slower but cheaper",
+          "It requires less compute, less data, and is faster to set up",
+          "It always produces better results regardless of the task",
+          "It's the only way to build AI models",
+        ],
+        correctAnswer:
+          "It requires less compute, less data, and is faster to set up",
+        explanation:
+          "Fine-tuning leverages pre-existing knowledge, making it more practical for real-world applications.",
+      },
+    ],
+    flashcards: [
+      {
+        concept: "Fine-tuning",
+        definition:
+          "Adapting a pre-trained model by training it further on task-specific data.",
+        example:
+          "Starting with a language model trained on general English, then fine-tuning on legal documents.",
+        tip: "You get a specialized model without the cost of training from scratch.",
+      },
+      {
+        concept: "Transfer Learning",
+        definition:
+          "Leveraging knowledge learned on one task to improve performance on another related task.",
+        example:
+          "A face-recognition model trained on millions of faces helps kickstart a dog-breed classifier.",
+        tip: "The more similar the tasks, the better transfer learning works.",
+      },
+      {
+        concept: "Pre-trained Model",
+        definition:
+          "A model already trained on large, general datasets and ready to be fine-tuned for specific tasks.",
+        example:
+          "GPT-3 or BERT, which have learned general language patterns and are available for fine-tuning.",
+        tip: "Pre-trained models are your starting point for building custom AI quickly.",
+      },
+      {
+        concept: "Frozen Layers",
+        definition:
+          "Earlier layers in a model that remain unchanged during fine-tuning, preserving general knowledge.",
+        example:
+          "Keeping the first 10 layers of a model fixed, only training the final 2 layers on new data.",
+        tip: "Freezing layers speeds up fine-tuning and reduces overfitting on small datasets.",
+      },
+      {
+        concept: "Overfitting (in fine-tuning context)",
+        definition:
+          "When a fine-tuned model memorizes the small training dataset rather than learning generalizable patterns.",
+        example:
+          "Fine-tuning on 100 very similar examples, so the model works well only on those and fails on new data.",
+        tip: "With small datasets, overfitting is a risk—use regularization and early stopping.",
+      },
+    ],
+  },
+
+  // 10 -----------------------------------------------------------------------
+  {
+    slug: "ai-safety-and-alignment",
+    title: "AI Safety and Alignment",
+    level: "Builder Mindset",
+    objective:
+      "Understand key concepts in AI safety and the challenge of aligning AI systems to human values.",
+    lessonContent:
+      "As AI systems become more powerful, AI safety—ensuring they behave as intended and don't cause harm—becomes critical. 'Alignment' refers to the challenge of making AI systems pursue goals that are actually beneficial and aligned with human values, not unintended side effects of their training.\n\nKey safety considerations include: adversarial robustness (protecting AI from bad-faith inputs), interpretability (understanding why an AI made a decision), scalable oversight (monitoring AI behavior as it scales), and value alignment (ensuring AI systems pursue the right goals). This is an active research area where technical work combines with policy and ethics.",
+    scenario:
+      "An AI optimization system is told to 'maximize user engagement on social media'—a vague goal. Without careful alignment, it might learn to promote addictive, polarizing, or false content because that maximizes clicks. Good safety practices mean specifying the goal more precisely and monitoring for harmful outcomes.",
+    badge: {
+      name: "Safety Guardian",
+      description: "Understood AI safety and alignment challenges.",
+      icon: "shield-alert",
+    },
+    quiz: [
+      {
+        type: "mcq",
+        question: "What does 'alignment' mean in the context of AI safety?",
+        options: [
+          "Making AI models run on the same hardware",
+          "Ensuring AI systems pursue goals that are beneficial and aligned with human values",
+          "Organizing AI code in a neat file structure",
+          "Aligning training data in sorted order",
+        ],
+        correctAnswer:
+          "Ensuring AI systems pursue goals that are beneficial and aligned with human values",
+        explanation:
+          "Alignment is the challenge of encoding human values into AI objectives so systems do what we actually want.",
+      },
+      {
+        type: "true_false",
+        question:
+          "If you specify an AI's goal perfectly clearly, it will never cause unintended harm.",
+        options: ["True", "False"],
+        correctAnswer: "False",
+        explanation:
+          "Even clear goals can have unintended side effects (the alignment problem: easy to specify bad outcomes, hard to specify nuanced human values).",
+      },
+      {
+        type: "mcq",
+        question: "What is 'adversarial robustness' in AI safety?",
+        options: [
+          "The ability to fight physical adversaries",
+          "Protecting an AI system from bad-faith inputs designed to trick it or cause it to malfunction",
+          "Making AI systems competitive against each other",
+          "Teaching AI to be aggressive",
+        ],
+        correctAnswer:
+          "Protecting an AI system from bad-faith inputs designed to trick it or cause it to malfunction",
+        explanation:
+          "Adversarial robustness means the AI is resilient against inputs carefully designed to fool it.",
+      },
+      {
+        type: "scenario",
+        question:
+          "An AI recommendation system is optimized only for 'user clicks.' Without additional safeguards, what's a likely risk?",
+        options: [
+          "The system will become self-aware",
+          "The system might learn to recommend addictive, misleading, or polarizing content because it maximizes clicks",
+          "The system will refuse to work",
+          "Nothing, clicks are a perfect measure of quality",
+        ],
+        correctAnswer:
+          "The system might learn to recommend addictive, misleading, or polarizing content because it maximizes clicks",
+        explanation:
+          "This is a classic misalignment: the stated goal (clicks) doesn't match the actual goal (quality, truth, user wellbeing).",
+      },
+      {
+        type: "true_false",
+        question:
+          "AI safety and alignment are important research areas that combine technical work with ethics and policy.",
+        options: ["True", "False"],
+        correctAnswer: "True",
+        explanation:
+          "Modern AI safety involves computer scientists, ethicists, policymakers, and domain experts working together.",
+      },
+      {
+        type: "mcq",
+        question: "What does 'interpretability' mean in AI safety?",
+        options: [
+          "Teaching the AI to translate languages",
+          "Understanding why an AI system made a particular decision or prediction",
+          "Making AI code easier to type",
+          "Allowing humans to interpret results in different languages",
+        ],
+        correctAnswer:
+          "Understanding why an AI system made a particular decision or prediction",
+        explanation:
+          "Interpretability research aims to open the 'black box' and explain AI reasoning—critical for safety and trust.",
+      },
+    ],
+    flashcards: [
+      {
+        concept: "AI Alignment",
+        definition:
+          "The challenge of ensuring AI systems pursue goals aligned with human values and beneficial outcomes.",
+        example:
+          "An AI that prioritizes user wellbeing and truthfulness, not just maximizing engagement.",
+        tip: "Alignment is harder than it sounds—vague goals lead to unintended side effects.",
+      },
+      {
+        concept: "AI Safety",
+        definition:
+          "The research field focused on ensuring AI systems are safe, beneficial, and don't cause unintended harm.",
+        example:
+          "Testing a medical AI for failures, biases, and adversarial robustness before deployment.",
+        tip: "Safety becomes more critical as AI systems become more powerful and autonomous.",
+      },
+      {
+        concept: "Adversarial Robustness",
+        definition:
+          "The ability of an AI system to resist intentionally designed adversarial inputs meant to fool it.",
+        example:
+          "An image classifier that still correctly identifies a stop sign even if an attacker adds subtle pixel changes.",
+        tip: "Security-critical AI systems need adversarial robustness testing.",
+      },
+      {
+        concept: "Interpretability",
+        definition:
+          "Understanding why an AI model made a particular decision or produced a particular output.",
+        example:
+          "For a loan-approval AI, explaining which factors led to a 'deny' decision.",
+        tip: "Interpretability is essential for trust, debugging, and regulatory compliance.",
+      },
+      {
+        concept: "Goal Specification / Reward Design",
+        definition:
+          "Precisely defining what you want an AI system to optimize for—harder than it seems.",
+        example:
+          "Saying 'maximize user satisfaction' is vague; better to specify measurable outcomes like 'helpful ratings.'",
+        tip: "Poor goal specification is a root cause of misaligned AI behavior.",
       },
     ],
   },
