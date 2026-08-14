@@ -1,0 +1,206 @@
+@import "tailwindcss";
+
+:root {
+  /* ---- "Field journal" palette — navy is the dominant chrome color
+     throughout the app (not just the hero); parchment is reserved for
+     content cards ("field notes") inset into it, not the whole page.
+     This is a deliberate departure from the generic warm-cream-page +
+     near-black-SaaS defaults. ---- */
+  --navy: #151a33;
+  --navy-deep: #10142a;
+  --navy-light: #1f2647;
+  --paper: #f3eee0;
+  --paper-dim: #e9e2cf;
+  --ink: #201d1a;
+  --amber: #e9a23b;
+  --amber-dark: #c67f24;
+  --teal: #3fa394;
+  --teal-dark: #2c7d71;
+  --coral: #e1544a;
+  --coral-dark: #bd3e35;
+  --muted: #8b8578;
+
+  --background: var(--paper);
+  --foreground: var(--ink);
+
+  /* Three type roles: display serif (headlines), body grotesk (UI/copy),
+     and a monospace "field stamp" face for waypoint numbers / coordinate
+     -style labels — the app's recurring signature motif.
+     Uses system-available fonts so the build never depends on external font
+     downloads — swap in next/font/google (Fraunces / Inter / JetBrains Mono)
+     once you have a normal internet connection outside this sandbox. */
+  --font-display: Georgia, "Iowan Old Style", "Palatino Linotype", ui-serif, serif;
+  --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, Helvetica, Arial, sans-serif;
+  --font-stamp: ui-monospace, "SF Mono", "Cascadia Code", "Roboto Mono", Menlo, Consolas, monospace;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-navy: var(--navy);
+  --color-navy-deep: var(--navy-deep);
+  --color-navy-light: var(--navy-light);
+  --color-paper: var(--paper);
+  --color-paper-dim: var(--paper-dim);
+  --color-parchment: var(--paper);
+  --color-parchment-dim: var(--paper-dim);
+  --color-ink: var(--ink);
+  --color-amber: var(--amber);
+  --color-amber-dark: var(--amber-dark);
+  --color-teal: var(--teal);
+  --color-teal-dark: var(--teal-dark);
+  --color-coral: var(--coral);
+  --color-coral-dark: var(--coral-dark);
+  --color-muted: var(--muted);
+  --font-display: var(--font-display);
+  --font-body: var(--font-body);
+  --font-stamp: var(--font-stamp);
+}
+
+* {
+  border-color: var(--paper-dim);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-body);
+}
+
+h1, h2, h3, .font-display {
+  font-family: var(--font-display);
+}
+
+.font-stamp {
+  font-family: var(--font-stamp);
+  letter-spacing: 0.06em;
+}
+
+/* Eyebrow / waypoint-coordinate style label used across hero, mission map,
+   and section headers — the recurring "field stamp" signature. */
+.stamp-label {
+  font-family: var(--font-stamp);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* Stitched / dashed trail rule, used for the mission map path and as a
+   section divider — the visual thread tying hero and map together. */
+.trail-rule {
+  background-image: repeating-linear-gradient(
+    to bottom,
+    var(--ink) 0,
+    var(--ink) 2px,
+    transparent 2px,
+    transparent 10px
+  );
+  opacity: 0.15;
+}
+
+.trail-rule-horizontal {
+  background-image: repeating-linear-gradient(
+    to right,
+    currentColor 0,
+    currentColor 6px,
+    transparent 6px,
+    transparent 13px
+  );
+}
+
+/* Subtle paper grain so content cards read as "field notes" rather than
+   flat generic cards — restrained, single low-opacity noise layer. */
+.paper-grain {
+  position: relative;
+}
+.paper-grain::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  opacity: 0.5;
+  background-image: radial-gradient(circle at 1px 1px, rgba(32, 29, 26, 0.05) 1px, transparent 0);
+  background-size: 14px 14px;
+}
+
+/* Halftone dot texture — borrowed from the wireframe reference's blueprint
+   imagery, re-themed here as an engraved-map texture rather than raw photo
+   halftone. Used for hero/showcase graphic panels, not general decoration. */
+.halftone {
+  background-image: radial-gradient(circle, currentColor 1.4px, transparent 1.4px);
+  background-size: 9px 9px;
+}
+
+/* Crosshair corner marks — the wireframe reference's blueprint corner ticks,
+   re-read here as literal map/coordinate marks to match the waypoint system.
+   Apply to a `relative` container; four ticks appear at its corners. */
+.map-corners {
+  position: relative;
+}
+.map-corners::before,
+.map-corners::after,
+.map-corners > .corner-tr,
+.map-corners > .corner-br {
+  content: "";
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  pointer-events: none;
+}
+.map-corners::before {
+  top: -1px;
+  left: -1px;
+  border-top: 2px solid var(--amber);
+  border-left: 2px solid var(--amber);
+}
+.map-corners::after {
+  bottom: -1px;
+  right: -1px;
+  border-bottom: 2px solid var(--amber);
+  border-right: 2px solid var(--amber);
+}
+.map-corners > .corner-tr {
+  top: -1px;
+  right: -1px;
+  border-top: 2px solid var(--amber);
+  border-right: 2px solid var(--amber);
+}
+.map-corners > .corner-br {
+  bottom: -1px;
+  left: -1px;
+  border-bottom: 2px solid var(--amber);
+  border-left: 2px solid var(--amber);
+}
+
+/* Continuous horizontal marquee, used sparingly for the concept ticker. */
+@keyframes marquee-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.marquee-track {
+  animation: marquee-scroll 32s linear infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+.focus-ring {
+  outline: none;
+}
+.focus-ring:focus-visible {
+  outline: 2px solid var(--amber);
+  outline-offset: 2px;
+  border-radius: 0.5rem;
+}
