@@ -35,7 +35,7 @@ export const missions: SeedMission[] = [
     objective:
       "Understand what artificial intelligence actually is, in plain language.",
     lessonContent:
-      "Artificial intelligence (AI) is software that performs tasks which normally need human thinking — recognizing images, understanding language, making predictions, or generating new content. It isn't magic and it isn't a robot with a personality; under the hood it's a program trained on large amounts of data to find patterns and use them to produce useful outputs.\n\nMost AI you'll interact with day to day is 'narrow AI' — it's very good at a specific task (like writing text or recommending a video) but doesn't 'understand' the world the way a person does. It has no goals, feelings, or awareness. It's a powerful pattern-matching and prediction tool.",
+      "Artificial intelligence (AI) is software that performs tasks which normally need human thinking - recognizing images, understanding language, making predictions, or generating new content. It isn't magic and it isn't a robot with a personality; under the hood it's a program trained on large amounts of data to find patterns and use them to produce useful outputs.\n\nMost AI you'll interact with day to day is 'narrow AI' - it's very good at a specific task (like writing text or recommending a video) but doesn't 'understand' the world the way a person does. It has no goals, feelings, or awareness. It's a powerful pattern-matching and prediction tool.",
     scenario:
       "When your phone's camera auto-detects a face and adjusts focus, that's AI: a model trained on millions of photos to recognize the pattern of a human face.",
     badge: {
@@ -56,12 +56,12 @@ export const missions: SeedMission[] = [
         correctAnswer:
           "They find patterns in data and use them to produce outputs",
         explanation:
-          "AI systems are trained on data to recognize patterns and generate predictions or content — they don't have understanding, feelings, or awareness the way people do.",
+          "AI systems are trained on data to recognize patterns and generate predictions or content - they don't have understanding, feelings, or awareness the way people do.",
       },
       {
         type: "true_false",
         question:
-          "Most AI you use today is 'narrow AI' — good at a specific task, not general reasoning about anything.",
+          "Most AI you use today is 'narrow AI' - good at a specific task, not general reasoning about anything.",
         options: ["True", "False"],
         correctAnswer: "True",
         explanation:
@@ -94,7 +94,7 @@ export const missions: SeedMission[] = [
         correctAnswer:
           "AI can respond in ways that sound empathetic, but it doesn't actually have feelings or understanding",
         explanation:
-          "AI can be very good at producing language that sounds empathetic because it learned that pattern from data — but there's no actual feeling behind it.",
+          "AI can be very good at producing language that sounds empathetic because it learned that pattern from data - but there's no actual feeling behind it.",
       },
       {
         type: "true_false",
@@ -103,7 +103,7 @@ export const missions: SeedMission[] = [
         options: ["True", "False"],
         correctAnswer: "False",
         explanation:
-          "AI systems don't have independent goals or intentions — they produce outputs based on patterns learned during training and the input they're given.",
+          "AI systems don't have independent goals or intentions - they produce outputs based on patterns learned during training and the input they're given.",
       },
     ],
     flashcards: [
@@ -140,9 +140,9 @@ export const missions: SeedMission[] = [
     objective:
       "Understand how generative AI creates new text, images, or audio instead of just classifying things.",
     lessonContent:
-      "Generative AI is a category of AI that creates new content — text, images, audio, video, or code — rather than just labeling or sorting existing content. Tools like chatbots, image generators, and music generators are all generative AI.\n\nIt works by learning the statistical structure of huge amounts of existing content (millions of sentences, images, or songs) and then generating new examples that follow similar patterns. It's not copying and pasting from its training data — it's predicting what a plausible next word, pixel, or sound should be, based on everything it learned.",
+      "Generative AI is a category of AI that creates new content - text, images, audio, video, or code - rather than just labeling or sorting existing content. Tools like chatbots, image generators, and music generators are all generative AI.\n\nIt works by learning the statistical structure of huge amounts of existing content (millions of sentences, images, or songs) and then generating new examples that follow similar patterns. It's not copying and pasting from its training data — it's predicting what a plausible next word, pixel, or sound should be, based on everything it learned.",
     scenario:
-      "You type 'write a two-line poem about rain' into a chatbot and it produces original lines it has never seen before — that's generative AI predicting plausible, fitting text step by step.",
+      "You type 'write a two-line poem about rain' into a chatbot and it produces original lines it has never seen before - that's generative AI predicting plausible, fitting text step by step.",
     badge: {
       name: "Creator's Spark",
       description: "Understood how generative AI creates new content.",
@@ -171,7 +171,7 @@ export const missions: SeedMission[] = [
         options: ["True", "False"],
         correctAnswer: "False",
         explanation:
-          "It generates new text by predicting plausible next words based on patterns it learned — it isn't retrieving and pasting a stored poem.",
+          "It generates new text by predicting plausible next words based on patterns it learned - it isn't retrieving and pasting a stored poem.",
       },
       {
         type: "mcq",
@@ -185,12 +185,12 @@ export const missions: SeedMission[] = [
         correctAnswer:
           "Generating a brand-new product description from a short prompt",
         explanation:
-          "Creating new original text from a prompt is a generative task — the others are classification or prediction tasks on existing data.",
+          "Creating new original text from a prompt is a generative task - the others are classification or prediction tasks on existing data.",
       },
       {
         type: "scenario",
         question:
-          "An AI image generator produces a picture of 'a cat wearing a spacesuit on the moon' — an image that never existed before. What best explains how?",
+          "An AI image generator produces a picture of 'a cat wearing a spacesuit on the moon' - an image that never existed before. What best explains how?",
         options: [
           "It found and slightly edited a real existing photo",
           "It generated new pixels based on patterns learned from many images, guided by your description",
@@ -205,7 +205,7 @@ export const missions: SeedMission[] = [
       {
         type: "true_false",
         question:
-          "Generative AI can only produce text — never images, audio, or code.",
+          "Generative AI can only produce text - never images, audio, or code.",
         options: ["True", "False"],
         correctAnswer: "False",
         explanation:
@@ -232,7 +232,7 @@ export const missions: SeedMission[] = [
       {
         concept: "Multimodal generation",
         definition:
-          "Generative AI that works across content types — text, image, audio, video.",
+          "Generative AI that works across content types - text, image, audio, video.",
         example:
           "One tool that can turn a text prompt into both an image and a matching caption.",
         tip: "Modern generative tools increasingly combine multiple content types.",
@@ -248,9 +248,9 @@ export const missions: SeedMission[] = [
     objective:
       "Understand what a Large Language Model is and how it produces text.",
     lessonContent:
-      "A Large Language Model (LLM) is a type of generative AI trained on enormous amounts of text to predict the next word (technically, the next 'token') in a sequence. By doing this prediction extremely well across billions of examples, an LLM becomes capable of writing essays, answering questions, summarizing documents, translating languages, and holding conversations.\n\n'Large' refers to the size of the model (the number of internal parameters it adjusts during training) and the size of the training data. LLMs don't 'look up' answers in a database — they generate a response one token at a time, each token chosen based on everything that came before it.",
+      "A Large Language Model (LLM) is a type of generative AI trained on enormous amounts of text to predict the next word (technically, the next 'token') in a sequence. By doing this prediction extremely well across billions of examples, an LLM becomes capable of writing essays, answering questions, summarizing documents, translating languages, and holding conversations.\n\n'Large' refers to the size of the model (the number of internal parameters it adjusts during training) and the size of the training data. LLMs don't 'look up' answers in a database - they generate a response one token at a time, each token chosen based on everything that came before it.",
     scenario:
-      "When you ask an LLM-based chatbot a question, it isn't searching a library of pre-written answers — it's generating a fresh response, token by token, based on patterns learned during training.",
+      "When you ask an LLM-based chatbot a question, it isn't searching a library of pre-written answers - it's generating a fresh response, token by token, based on patterns learned during training.",
     badge: {
       name: "Language Model Explorer",
       description: "Learned how LLMs generate language.",
@@ -279,7 +279,7 @@ export const missions: SeedMission[] = [
         options: ["True", "False"],
         correctAnswer: "False",
         explanation:
-          "LLMs don't store question-answer pairs — they learn general language patterns and generate responses dynamically.",
+          "LLMs don't store question-answer pairs - they learn general language patterns and generate responses dynamically.",
       },
       {
         type: "mcq",
@@ -293,7 +293,7 @@ export const missions: SeedMission[] = [
         ],
         correctAnswer: "The scale of its parameters and training data",
         explanation:
-          "'Large' refers to the model's scale — billions of adjustable parameters trained on massive text datasets.",
+          "'Large' refers to the model's scale - billions of adjustable parameters trained on massive text datasets.",
       },
       {
         type: "scenario",
@@ -308,7 +308,7 @@ export const missions: SeedMission[] = [
         correctAnswer:
           "It used the conversation history provided as context for this prediction",
         explanation:
-          "LLMs generate each response using the text provided as context — including earlier turns in the conversation, if included in the input.",
+          "LLMs generate each response using the text provided as context - including earlier turns in the conversation, if included in the input.",
       },
       {
         type: "true_false",
@@ -416,7 +416,7 @@ export const missions: SeedMission[] = [
         correctAnswer:
           "Ask again with more detail: 'Explain neural networks like I'm new to AI, using a simple everyday analogy'",
         explanation:
-          "Refining your prompt with audience level and a request for an analogy is a core prompt engineering technique — iterating gets better results.",
+          "Refining your prompt with audience level and a request for an analogy is a core prompt engineering technique - iterating gets better results.",
       },
       {
         type: "true_false",
@@ -463,9 +463,9 @@ export const missions: SeedMission[] = [
     objective:
       "Understand what tokens are and why context windows limit how much an AI can 'remember' at once.",
     lessonContent:
-      "A token is a chunk of text an AI model processes — often a word, part of a word, or punctuation mark. 'Unbelievable' might be split into tokens like 'un', 'believ', and 'able'. Models read and generate text token by token, and every input and output counts against a limit called the context window.\n\nThe context window is the maximum number of tokens a model can consider at once — including your prompt, any earlier conversation, and its own response. If a conversation grows past that limit, the oldest parts get dropped or summarized, which is why a very long chat can cause a model to 'forget' something mentioned much earlier.",
+      "A token is a chunk of text an AI model processes - often a word, part of a word, or punctuation mark. 'Unbelievable' might be split into tokens like 'un', 'believ', and 'able'. Models read and generate text token by token, and every input and output counts against a limit called the context window.\n\nThe context window is the maximum number of tokens a model can consider at once — including your prompt, any earlier conversation, and its own response. If a conversation grows past that limit, the oldest parts get dropped or summarized, which is why a very long chat can cause a model to 'forget' something mentioned much earlier.",
     scenario:
-      "You paste a 50-page document and ask detailed questions about page 2 after a long conversation — if the total token count exceeds the model's context window, earlier details may no longer be available to it.",
+      "You paste a 50-page document and ask detailed questions about page 2 after a long conversation - if the total token count exceeds the model's context window, earlier details may no longer be available to it.",
     badge: {
       name: "Context Keeper",
       description: "Understood tokens and context windows.",
@@ -477,12 +477,12 @@ export const missions: SeedMission[] = [
         question: "What is a 'token' in the context of LLMs?",
         options: [
           "A security password for the AI system",
-          "A chunk of text — often a word or part of a word — that the model processes",
+          "A chunk of text — often a word or part of a word - that the model processes",
           "A unit of computing hardware",
           "A type of image file",
         ],
         correctAnswer:
-          "A chunk of text — often a word or part of a word — that the model processes",
+          "A chunk of text — often a word or part of a word - that the model processes",
         explanation:
           "Tokens are the basic text units models read and generate, which may be whole words, sub-words, or punctuation.",
       },
@@ -570,9 +570,9 @@ export const missions: SeedMission[] = [
     objective:
       "Understand why AI models sometimes generate confident but false information, and how to catch it.",
     lessonContent:
-      "A 'hallucination' is when an AI model generates information that sounds plausible and confident but is actually false or made up — like citing a study that doesn't exist, or stating an incorrect fact with total certainty. This happens because the model is optimized to produce fluent, plausible-sounding text, not to verify truth against a database.\n\nHallucinations are more likely on very specific facts, recent events, obscure topics, or when a model is pushed to answer something it doesn't actually have reliable information about. The best defenses are: verify important facts against a real source, ask the model to cite where information comes from, and stay skeptical of confident-sounding specifics you can't independently check.",
+      "A 'hallucination' is when an AI model generates information that sounds plausible and confident but is actually false or made up - like citing a study that doesn't exist, or stating an incorrect fact with total certainty. This happens because the model is optimized to produce fluent, plausible-sounding text, not to verify truth against a database.\n\nHallucinations are more likely on very specific facts, recent events, obscure topics, or when a model is pushed to answer something it doesn't actually have reliable information about. The best defenses are: verify important facts against a real source, ask the model to cite where information comes from, and stay skeptical of confident-sounding specifics you can't independently check.",
     scenario:
-      "You ask an AI for a legal citation and it gives you a real-looking case name and number — but the case doesn't actually exist. That's a hallucination: fluent and confident, but fabricated.",
+      "You ask an AI for a legal citation and it gives you a real-looking case name and number - but the case doesn't actually exist. That's a hallucination: fluent and confident, but fabricated.",
     badge: {
       name: "Fact Checker",
       description: "Learned to spot and handle AI hallucinations.",
@@ -629,7 +629,7 @@ export const missions: SeedMission[] = [
         correctAnswer:
           "Independently verify the statistic and source before relying on it",
         explanation:
-          "Confidence in tone is not evidence of accuracy — independently verifying specific facts is the reliable defense against hallucination.",
+          "Confidence in tone is not evidence of accuracy - independently verifying specific facts is the reliable defense against hallucination.",
       },
       {
         type: "true_false",
@@ -638,7 +638,7 @@ export const missions: SeedMission[] = [
         options: ["True", "False"],
         correctAnswer: "False",
         explanation:
-          "A model can hallucinate citations too — asking for sources helps you verify, but doesn't guarantee accuracy on its own.",
+          "A model can hallucinate citations too - asking for sources helps you verify, but doesn't guarantee accuracy on its own.",
       },
     ],
     flashcards: [
@@ -676,9 +676,9 @@ export const missions: SeedMission[] = [
     objective:
       "Understand how bias enters AI systems and what responsible use looks like.",
     lessonContent:
-      "AI models learn from data created by people, and that data can reflect historical, social, or sampling biases. If training data over-represents certain groups, viewpoints, or contexts, the model's outputs can systematically reflect that imbalance — for example, associating certain jobs with one gender more than another, simply because that pattern was more common in the training data.\n\nResponsible AI use means being aware that outputs can carry bias, testing AI-assisted decisions (especially high-stakes ones like hiring or lending) for fairness, giving humans final review over consequential decisions, and being thoughtful about the language and assumptions in your own prompts too.",
+      "AI models learn from data created by people, and that data can reflect historical, social, or sampling biases. If training data over-represents certain groups, viewpoints, or contexts, the model's outputs can systematically reflect that imbalance - for example, associating certain jobs with one gender more than another, simply because that pattern was more common in the training data.\n\nResponsible AI use means being aware that outputs can carry bias, testing AI-assisted decisions (especially high-stakes ones like hiring or lending) for fairness, giving humans final review over consequential decisions, and being thoughtful about the language and assumptions in your own prompts too.",
     scenario:
-      "An AI resume-screening tool trained mostly on past hires in a male-dominated field starts favoring resumes with 'masculine-coded' language — reflecting a bias in the training data, not an intentional decision by the model.",
+      "An AI resume-screening tool trained mostly on past hires in a male-dominated field starts favoring resumes with 'masculine-coded' language - reflecting a bias in the training data, not an intentional decision by the model.",
     badge: {
       name: "Responsible Explorer",
       description: "Learned how bias enters AI and how to use AI responsibly.",
@@ -705,7 +705,7 @@ export const missions: SeedMission[] = [
         options: ["True", "False"],
         correctAnswer: "False",
         explanation:
-          "AI systems can absolutely reflect and even amplify biases present in their training data — being a computer system doesn't make output neutral.",
+          "AI systems can absolutely reflect and even amplify biases present in their training data - being a computer system doesn't make output neutral.",
       },
       {
         type: "mcq",
@@ -852,7 +852,7 @@ export const missions: SeedMission[] = [
         options: ["True", "False"],
         correctAnswer: "False",
         explanation:
-          "RAG significantly reduces hallucination risk by grounding answers in real documents, but it doesn't guarantee perfect accuracy — the model can still misinterpret retrieved content.",
+          "RAG significantly reduces hallucination risk by grounding answers in real documents, but it doesn't guarantee perfect accuracy - the model can still misinterpret retrieved content.",
       },
     ],
     flashcards: [

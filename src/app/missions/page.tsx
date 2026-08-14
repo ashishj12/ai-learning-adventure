@@ -55,7 +55,7 @@ export default function MissionsPage() {
           Mission Map
         </h1>
         <p className="mt-1 text-ink/60">
-          Follow the path — each mission unlocks the next.
+          Follow the path - each mission unlocks the next.
         </p>
 
         {total > 0 && (

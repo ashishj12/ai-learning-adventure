@@ -37,7 +37,7 @@ const showcase = [
     eyebrow: "Beginner · Mission 01",
     title: "Understand the",
     accent: "basics",
-    copy: "Start with what AI actually is — pattern-matching at scale, not magic. No jargon, no assumed knowledge.",
+    copy: "Start with what AI actually is - pattern-matching at scale, not magic. No jargon, no assumed knowledge.",
   },
   {
     n: "02",
@@ -45,7 +45,7 @@ const showcase = [
     eyebrow: "Basic Understanding · Mission 04",
     title: "Craft better",
     accent: "prompts",
-    copy: "Learn why specific, structured prompts get better answers — and practice on real examples.",
+    copy: "Learn why specific, structured prompts get better answers - and practice on real examples.",
   },
   {
     n: "03",
@@ -60,19 +60,19 @@ const showcase = [
 const faqs = [
   {
     q: "Do I need to sign in?",
-    a: "No. Your progress is saved automatically in this browser — no account, no email, nothing to set up.",
+    a: "No. Your progress is saved automatically in this browser - no account, no email, nothing to set up.",
   },
   {
     q: "Does the AI tutor cost anything?",
-    a: "The tutor works out of the box using built-in sample responses. If the app owner connects a free-tier AI key, you'll get live answers instead — either way, nothing is required from you.",
+    a: "The tutor works out of the box using built-in sample responses. If the app owner connects a free-tier AI key, you'll get live answers instead - either way, nothing is required from you.",
   },
   {
     q: "What if I already know some AI basics?",
-    a: "Missions are grouped by level, from Beginner through Builder Mindset. Jump to whichever mission matches what you already know — the map just asks you to finish one to unlock the next.",
+    a: "Missions are grouped by level, from Beginner through Builder Mindset. Jump to whichever mission matches what you already know - the map just asks you to finish one to unlock the next.",
   },
   {
     q: "Can I revisit a mission later?",
-    a: "Yes — completed missions stay on your map along with your quiz score, and flashcards are always there for review.",
+    a: "Yes - completed missions stay on your map along with your quiz score, and flashcards are always there for review.",
   },
 ];
 
@@ -126,7 +126,7 @@ export default function LandingPage() {
               transition={{ duration: 0.6, delay: 0.1 }}
               className="mt-5 max-w-lg text-base text-paper/65 sm:text-lg"
             >
-              Prompts, LLMs, hallucinations, bias, tokens, RAG — explained
+              Prompts, LLMs, hallucinations, bias, tokens, RAG - explained
               through short missions, quizzes, flashcards, and a tutor you can
               actually talk to.
             </motion.p>
@@ -334,7 +334,7 @@ export default function LandingPage() {
               {
                 n: "02",
                 title: "Ask the tutor",
-                copy: "Stuck on something? Ask for a simpler explanation, another example, or a hint — right inside the mission.",
+                copy: "Stuck on something? Ask for a simpler explanation, another example, or a hint - right inside the mission.",
               },
               {
                 n: "03",
@@ -462,7 +462,7 @@ export default function LandingPage() {
             Adventure
           </span>
           <span>
-            A guided journey through AI literacy — no account required.
+            A guided journey through AI literacy - no account required.
           </span>
         </div>
       </footer>
