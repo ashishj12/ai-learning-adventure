@@ -27,7 +27,8 @@ export default function ProgressPage() {
           fetch(`/api/badges`),
           fetch(`/api/progress?sessionId=${encodeURIComponent(sessionId)}`),
         ]);
-        if (!missionsRes.ok || !badgesRes.ok || !progressRes.ok) throw new Error("Request failed");
+        if (!missionsRes.ok || !badgesRes.ok || !progressRes.ok)
+          throw new Error("Request failed");
         const missionsData = await missionsRes.json();
         const badgesData = await badgesRes.json();
         const progressData = await progressRes.json();
@@ -36,19 +37,27 @@ export default function ProgressPage() {
         setAllBadges(badgesData.badges ?? []);
         setEarnedBadges(progressData.badgesEarned ?? []);
 
-        const incomplete = (missionsData.missions ?? []).find((m: MissionWithMeta) => m.progress?.status !== "completed");
+        const incomplete = (missionsData.missions ?? []).find(
+          (m: MissionWithMeta) => m.progress?.status !== "completed",
+        );
         if (incomplete) {
           fetch("/api/tutor", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ mode: "next_mission", missionSlug: incomplete.slug }),
+            body: JSON.stringify({
+              mode: "next_mission",
+              missionSlug: incomplete.slug,
+            }),
           })
             .then((r) => r.json())
             .then((d) => !cancelled && setNextTip(d.answer))
             .catch(() => {});
         }
       } catch {
-        if (!cancelled) setError("Couldn't load your progress right now. Check your connection and try again.");
+        if (!cancelled)
+          setError(
+            "Couldn't load your progress right now. Check your connection and try again.",
+          );
       }
     }
     load();
@@ -58,7 +67,11 @@ export default function ProgressPage() {
   }, [sessionId]);
 
   if (error) {
-    return <div className="mx-auto max-w-2xl px-6 py-16 text-center text-ink/60">{error}</div>;
+    return (
+      <div className="mx-auto max-w-2xl px-6 py-16 text-center text-ink/60">
+        {error}
+      </div>
+    );
   }
 
   if (!missions || !allBadges || !earnedBadges) {
@@ -77,8 +90,11 @@ export default function ProgressPage() {
     completed.length > 0
       ? Math.round(
           (completed.reduce((sum, m) => sum + (m.progress?.quizScore ?? 0), 0) /
-            completed.reduce((sum, m) => sum + (m.progress?.quizTotal ?? 1), 0)) *
-            100
+            completed.reduce(
+              (sum, m) => sum + (m.progress?.quizTotal ?? 1),
+              0,
+            )) *
+            100,
         )
       : null;
   const nextMission = missions.find((m) => m.progress?.status !== "completed");
@@ -94,30 +110,52 @@ export default function ProgressPage() {
 
   return (
     <div className="mx-auto max-w-3xl px-6 py-10">
-      <motion.h1 initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} className="font-display text-3xl font-semibold text-navy">
+      <motion.h1
+        initial={{ opacity: 0, y: 8 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="font-display text-3xl font-semibold text-navy"
+      >
         Your Progress
       </motion.h1>
 
       {completed.length === total ? (
         <Card className="mt-6 bg-teal/10 text-center">
-          <p className="font-display text-xl font-semibold text-teal-dark">🎉 All missions complete!</p>
-          <p className="mt-1 text-sm text-ink/60">You've earned every badge in this adventure so far.</p>
+          <p className="font-display text-xl font-semibold text-teal-dark">
+            🎉 All missions complete!
+          </p>
+          <p className="mt-1 text-sm text-ink/60">
+            You've earned every badge in this adventure so far.
+          </p>
         </Card>
       ) : (
         <div className="mt-6 grid gap-4 sm:grid-cols-3">
           <Card>
-            <p className="text-xs font-medium uppercase tracking-wide text-ink/50">Completion</p>
-            <p className="mt-1 font-display text-2xl font-semibold text-navy">{pct}%</p>
-            <p className="text-xs text-ink/50">{completed.length} of {total} missions</p>
+            <p className="text-xs font-medium uppercase tracking-wide text-ink/50">
+              Completion
+            </p>
+            <p className="mt-1 font-display text-2xl font-semibold text-navy">
+              {pct}%
+            </p>
+            <p className="text-xs text-ink/50">
+              {completed.length} of {total} missions
+            </p>
           </Card>
           <Card>
-            <p className="text-xs font-medium uppercase tracking-wide text-ink/50">Avg. quiz score</p>
-            <p className="mt-1 font-display text-2xl font-semibold text-navy">{avgScore !== null ? `${avgScore}%` : "—"}</p>
+            <p className="text-xs font-medium uppercase tracking-wide text-ink/50">
+              Avg. quiz score
+            </p>
+            <p className="mt-1 font-display text-2xl font-semibold text-navy">
+              {avgScore !== null ? `${avgScore}%` : "—"}
+            </p>
             <p className="text-xs text-ink/50">Across completed missions</p>
           </Card>
           <Card>
-            <p className="text-xs font-medium uppercase tracking-wide text-ink/50">Badges earned</p>
-            <p className="mt-1 font-display text-2xl font-semibold text-navy">{earnedBadges.length} / {allBadges.length}</p>
+            <p className="text-xs font-medium uppercase tracking-wide text-ink/50">
+              Badges earned
+            </p>
+            <p className="mt-1 font-display text-2xl font-semibold text-navy">
+              {earnedBadges.length} / {allBadges.length}
+            </p>
           </Card>
         </div>
       )}
@@ -125,11 +163,21 @@ export default function ProgressPage() {
       {nextMission && (
         <Card className="mt-6 border-amber/30 bg-amber/10">
           <div className="flex items-start gap-3">
-            <Sparkles className="mt-0.5 h-5 w-5 shrink-0 text-amber-dark" aria-hidden />
+            <Sparkles
+              className="mt-0.5 h-5 w-5 shrink-0 text-amber-dark"
+              aria-hidden
+            />
             <div className="flex-1">
-              <p className="text-sm font-semibold text-amber-dark">Suggested next mission</p>
-              <p className="mt-1 text-sm text-ink/70">{nextTip ?? `Continue with "${nextMission.title}".`}</p>
-              <Link href={`/missions/${nextMission.slug}`} className={buttonClass({ size: "sm" }, "mt-3 inline-flex")}>
+              <p className="text-sm font-semibold text-amber-dark">
+                Suggested next mission
+              </p>
+              <p className="mt-1 text-sm text-ink/70">
+                {nextTip ?? `Continue with "${nextMission.title}".`}
+              </p>
+              <Link
+                href={`/missions/${nextMission.slug}`}
+                className={buttonClass({ size: "sm" }, "mt-3 inline-flex")}
+              >
                 Go to {nextMission.title}
               </Link>
             </div>

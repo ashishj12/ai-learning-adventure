@@ -3,7 +3,9 @@
 import { useCallback, useEffect, useState } from "react";
 
 export function useAdminAuth() {
-  const [status, setStatus] = useState<"checking" | "authed" | "anon">("checking");
+  const [status, setStatus] = useState<"checking" | "authed" | "anon">(
+    "checking",
+  );
 
   const check = useCallback(async () => {
     try {
@@ -18,7 +20,9 @@ export function useAdminAuth() {
     check();
   }, [check]);
 
-  async function login(passcode: string): Promise<{ ok: boolean; error?: string }> {
+  async function login(
+    passcode: string,
+  ): Promise<{ ok: boolean; error?: string }> {
     try {
       const res = await fetch("/api/admin/auth", {
         method: "POST",
@@ -30,7 +34,10 @@ export function useAdminAuth() {
       setStatus("authed");
       return { ok: true };
     } catch {
-      return { ok: false, error: "Couldn't reach the server. Check your connection." };
+      return {
+        ok: false,
+        error: "Couldn't reach the server. Check your connection.",
+      };
     }
   }
 

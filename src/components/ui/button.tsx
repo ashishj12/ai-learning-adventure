@@ -7,7 +7,8 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        primary: "bg-amber text-navy-deep shadow-[0_2px_0_0_var(--amber-dark)] hover:brightness-105 active:shadow-[0_0px_0_0_var(--amber-dark)] active:translate-y-[2px]",
+        primary:
+          "bg-amber text-navy-deep shadow-[0_2px_0_0_var(--amber-dark)] hover:brightness-105 active:shadow-[0_0px_0_0_var(--amber-dark)] active:translate-y-[2px]",
         secondary: "bg-navy text-paper hover:bg-navy-light",
         outline: "border border-ink/15 bg-transparent hover:bg-ink/5 text-ink",
         ghost: "bg-transparent hover:bg-ink/5 text-ink",
@@ -20,22 +21,30 @@ const buttonVariants = cva(
       },
     },
     defaultVariants: { variant: "primary", size: "md" },
-  }
+  },
 );
 
 export interface ButtonProps
-  extends ButtonHTMLAttributes<HTMLButtonElement>,
+  extends
+    ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVariants> {}
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant, size, ...props }, ref) => (
-    <button ref={ref} className={cn(buttonVariants({ variant, size }), className)} {...props} />
-  )
+    <button
+      ref={ref}
+      className={cn(buttonVariants({ variant, size }), className)}
+      {...props}
+    />
+  ),
 );
 Button.displayName = "Button";
 
 // For rendering a Link (or any element) styled as a button, without nesting
 // an <a> inside a <button> (invalid HTML). Usage: <Link className={buttonClass()}>
-export function buttonClass(opts?: VariantProps<typeof buttonVariants>, className?: string) {
+export function buttonClass(
+  opts?: VariantProps<typeof buttonVariants>,
+  className?: string,
+) {
   return cn(buttonVariants(opts), className);
 }

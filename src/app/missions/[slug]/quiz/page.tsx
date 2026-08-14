@@ -18,7 +18,12 @@ export default function QuizPage() {
   const [mission, setMission] = useState<Mission | null>(null);
   const [questions, setQuestions] = useState<any[] | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [completedState, setCompletedState] = useState<{ score: number; total: number; badge: BadgeT | null; awarded: boolean } | null>(null);
+  const [completedState, setCompletedState] = useState<{
+    score: number;
+    total: number;
+    badge: BadgeT | null;
+    awarded: boolean;
+  } | null>(null);
   const [nextTip, setNextTip] = useState<string | null>(null);
 
   useEffect(() => {
@@ -26,9 +31,16 @@ export default function QuizPage() {
     let cancelled = false;
     async function load() {
       try {
-        const res = await fetch(`/api/missions/${slug}?sessionId=${encodeURIComponent(sessionId)}`);
+        const res = await fetch(
+          `/api/missions/${slug}?sessionId=${encodeURIComponent(sessionId)}`,
+        );
         if (!res.ok) {
-          if (!cancelled) setError(res.status === 404 ? "This mission isn't available." : "Couldn't load the quiz.");
+          if (!cancelled)
+            setError(
+              res.status === 404
+                ? "This mission isn't available."
+                : "Couldn't load the quiz.",
+            );
           return;
         }
         const data = await res.json();
@@ -37,7 +49,10 @@ export default function QuizPage() {
           setQuestions(data.questions);
         }
       } catch {
-        if (!cancelled) setError("Couldn't load the quiz. Check your connection and try again.");
+        if (!cancelled)
+          setError(
+            "Couldn't load the quiz. Check your connection and try again.",
+          );
       }
     }
     load();
@@ -52,10 +67,21 @@ export default function QuizPage() {
       const res = await fetch("/api/progress", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ sessionId, missionId: mission.id, status: "completed", quizScore: score, quizTotal: total }),
+        body: JSON.stringify({
+          sessionId,
+          missionId: mission.id,
+          status: "completed",
+          quizScore: score,
+          quizTotal: total,
+        }),
       });
       const data = await res.json();
-      setCompletedState({ score, total, badge: data.badge ?? null, awarded: !!data.badgeAwarded });
+      setCompletedState({
+        score,
+        total,
+        badge: data.badge ?? null,
+        awarded: !!data.badgeAwarded,
+      });
     } catch {
       // Progress save failed (offline, etc.) — still show the score so the
       // learner isn't stuck on a blank screen; badge/progress just won't persist.
@@ -75,7 +101,10 @@ export default function QuizPage() {
   if (error) {
     return (
       <div className="mx-auto max-w-2xl px-6 py-16 text-center">
-        <AlertTriangle className="mx-auto h-6 w-6 text-coral-dark" aria-hidden />
+        <AlertTriangle
+          className="mx-auto h-6 w-6 text-coral-dark"
+          aria-hidden
+        />
         <p className="mt-3 text-ink/60">{error}</p>
       </div>
     );
@@ -92,14 +121,27 @@ export default function QuizPage() {
 
   return (
     <div className="mx-auto max-w-2xl px-6 py-10">
-      <h1 className="font-display text-2xl font-semibold text-navy">{mission.title} — Checkpoint</h1>
-      <p className="mt-1 text-sm text-ink/60">Answer each question to check your understanding.</p>
+      <h1 className="font-display text-2xl font-semibold text-navy">
+        {mission.title} — Checkpoint
+      </h1>
+      <p className="mt-1 text-sm text-ink/60">
+        Answer each question to check your understanding.
+      </p>
 
       <div className="mt-6">
         {!completedState ? (
-          <QuizFlow missionSlug={mission.slug} missionTitle={mission.title} questions={questions} onComplete={handleComplete} />
+          <QuizFlow
+            missionSlug={mission.slug}
+            missionTitle={mission.title}
+            questions={questions}
+            onComplete={handleComplete}
+          />
         ) : (
-          <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="rounded-2xl border border-ink/10 bg-white p-8 text-center shadow-sm">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="rounded-2xl border border-ink/10 bg-white p-8 text-center shadow-sm"
+          >
             {completedState.awarded && completedState.badge && (
               <motion.div
                 initial={{ scale: 0, rotate: -8 }}
@@ -114,16 +156,26 @@ export default function QuizPage() {
               {completedState.score} / {completedState.total} correct
             </h2>
             {completedState.awarded && completedState.badge && (
-              <p className="mt-2 text-sm font-medium text-amber-dark">Badge earned: {completedState.badge.name}</p>
+              <p className="mt-2 text-sm font-medium text-amber-dark">
+                Badge earned: {completedState.badge.name}
+              </p>
             )}
-            {nextTip && <p className="mx-auto mt-4 max-w-md text-sm text-ink/60">{nextTip}</p>}
+            {nextTip && (
+              <p className="mx-auto mt-4 max-w-md text-sm text-ink/60">
+                {nextTip}
+              </p>
+            )}
 
             <div className="mt-6 flex flex-wrap justify-center gap-3">
-              <Link href={`/missions/${mission.slug}/flashcards`} className={buttonClass({ variant: "outline" })}>
+              <Link
+                href={`/missions/${mission.slug}/flashcards`}
+                className={buttonClass({ variant: "outline" })}
+              >
                 Review flashcards
               </Link>
               <Link href="/missions" className={buttonClass({})}>
-                Back to Mission Map <ArrowRight className="h-4 w-4" aria-hidden />
+                Back to Mission Map{" "}
+                <ArrowRight className="h-4 w-4" aria-hidden />
               </Link>
             </div>
           </motion.div>

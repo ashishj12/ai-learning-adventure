@@ -19,7 +19,12 @@ export default function FlashcardsPage() {
       try {
         const res = await fetch(`/api/missions/${slug}`);
         if (!res.ok) {
-          if (!cancelled) setError(res.status === 404 ? "This mission isn't available." : "Couldn't load flashcards.");
+          if (!cancelled)
+            setError(
+              res.status === 404
+                ? "This mission isn't available."
+                : "Couldn't load flashcards.",
+            );
           return;
         }
         const data = await res.json();
@@ -28,7 +33,10 @@ export default function FlashcardsPage() {
           setCards(data.flashcards);
         }
       } catch {
-        if (!cancelled) setError("Couldn't load flashcards. Check your connection and try again.");
+        if (!cancelled)
+          setError(
+            "Couldn't load flashcards. Check your connection and try again.",
+          );
       }
     }
     load();
@@ -40,7 +48,10 @@ export default function FlashcardsPage() {
   if (error) {
     return (
       <div className="mx-auto max-w-2xl px-6 py-16 text-center">
-        <AlertTriangle className="mx-auto h-6 w-6 text-coral-dark" aria-hidden />
+        <AlertTriangle
+          className="mx-auto h-6 w-6 text-coral-dark"
+          aria-hidden
+        />
         <p className="mt-3 text-ink/60">{error}</p>
       </div>
     );
@@ -57,8 +68,12 @@ export default function FlashcardsPage() {
 
   return (
     <div className="mx-auto max-w-xl px-6 py-10">
-      <h1 className="font-display text-2xl font-semibold text-navy">{mission.title} — Flashcards</h1>
-      <p className="mt-1 text-sm text-ink/60">Tap a card to flip between the concept and its definition.</p>
+      <h1 className="font-display text-2xl font-semibold text-navy">
+        {mission.title} — Flashcards
+      </h1>
+      <p className="mt-1 text-sm text-ink/60">
+        Tap a card to flip between the concept and its definition.
+      </p>
       <div className="mt-6">
         <FlashcardDeck cards={cards} />
       </div>

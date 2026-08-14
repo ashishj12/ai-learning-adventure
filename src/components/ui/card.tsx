@@ -6,7 +6,7 @@ export function Card({ className, ...props }: HTMLAttributes<HTMLDivElement>) {
     <div
       className={cn(
         "paper-grain rounded-2xl border border-ink/10 bg-white/80 backdrop-blur-sm shadow-sm p-6",
-        className
+        className,
       )}
       {...props}
     />
@@ -26,7 +26,7 @@ export function LevelPill({ level }: { level: string }) {
     <span
       className={cn(
         "stamp-label inline-flex items-center rounded-full px-3 py-1",
-        levelColors[level] ?? "bg-ink/10 text-ink"
+        levelColors[level] ?? "bg-ink/10 text-ink",
       )}
     >
       {level}

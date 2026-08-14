@@ -15,36 +15,57 @@ const questionSchema = z.object({
 });
 
 export async function GET(req: NextRequest) {
-  if (!isAdminRequest(req)) return NextResponse.json({ error: "Unauthorized." }, { status: 401 });
+  if (!isAdminRequest(req))
+    return NextResponse.json({ error: "Unauthorized." }, { status: 401 });
   try {
     const missionId = req.nextUrl.searchParams.get("missionId");
-    if (!missionId) return NextResponse.json({ error: "missionId is required." }, { status: 400 });
+    if (!missionId)
+      return NextResponse.json(
+        { error: "missionId is required." },
+        { status: 400 },
+      );
     const questions = QuestionRepo.listByMission(missionId, false);
     return NextResponse.json({ questions });
   } catch (err) {
     console.error("[/api/admin/questions] GET failed:", err);
-    return NextResponse.json({ error: "Failed to load questions." }, { status: 500 });
+    return NextResponse.json(
+      { error: "Failed to load questions." },
+      { status: 500 },
+    );
   }
 }
 
 export async function POST(req: NextRequest) {
-  if (!isAdminRequest(req)) return NextResponse.json({ error: "Unauthorized." }, { status: 401 });
+  if (!isAdminRequest(req))
+    return NextResponse.json({ error: "Unauthorized." }, { status: 401 });
   try {
     const json = await req.json().catch(() => null);
     const parsed = questionSchema.safeParse(json);
     if (!parsed.success) {
-      return NextResponse.json({ error: "Invalid question data.", details: parsed.error.flatten() }, { status: 400 });
+      return NextResponse.json(
+        { error: "Invalid question data.", details: parsed.error.flatten() },
+        { status: 400 },
+      );
     }
     if (!MissionRepo.getById(parsed.data.missionId)) {
-      return NextResponse.json({ error: "Mission not found." }, { status: 404 });
+      return NextResponse.json(
+        { error: "Mission not found." },
+        { status: 404 },
+      );
     }
     if (!parsed.data.options.includes(parsed.data.correctAnswer)) {
-      return NextResponse.json({ error: "correctAnswer must be one of the provided options." }, { status: 400 });
+      return NextResponse.json(
+        { error: "correctAnswer must be one of the provided options." },
+        { status: 400 },
+      );
     }
     const question = QuestionRepo.create(parsed.data);
     return NextResponse.json({ question }, { status: 201 });
   } catch (err) {
     console.error("[/api/admin/questions] POST failed:", err);
-    return NextResponse.json({ error: "Failed to create question." }, { status: 500 });
+    return NextResponse.json(
+      { error: "Failed to create question." },
+      { status: 500 },
+    );
   }
 }

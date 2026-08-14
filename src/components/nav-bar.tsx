@@ -18,23 +18,35 @@ export function NavBar() {
   return (
     <header className="sticky top-0 z-40 border-b border-black/20 bg-navy">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 sm:px-6">
-        <Link href="/" className="group flex items-center gap-2 font-display text-lg font-semibold text-paper focus-ring">
-          <Compass className="h-5 w-5 shrink-0 text-amber transition-transform duration-500 group-hover:rotate-45" aria-hidden />
+        <Link
+          href="/"
+          className="group flex items-center gap-2 font-display text-lg font-semibold text-paper focus-ring"
+        >
+          <Compass
+            className="h-5 w-5 shrink-0 text-amber transition-transform duration-500 group-hover:rotate-45"
+            aria-hidden
+          />
           <span className="sm:hidden">AI Adventure</span>
           <span className="hidden sm:inline">AI Learning Adventure</span>
         </Link>
 
         {!isAdmin && (
-          <nav aria-label="Main navigation" className="flex items-center gap-1 sm:gap-2">
+          <nav
+            aria-label="Main navigation"
+            className="flex items-center gap-1 sm:gap-2"
+          >
             {links.map(({ href, label, icon: Icon }) => {
-              const active = pathname === href || pathname?.startsWith(href + "/");
+              const active =
+                pathname === href || pathname?.startsWith(href + "/");
               return (
                 <Link
                   key={href}
                   href={href}
                   className={cn(
                     "flex items-center gap-1.5 rounded-full px-3 py-2 text-sm font-medium transition-colors focus-ring",
-                    active ? "bg-amber text-navy-deep" : "text-paper/65 hover:bg-white/5 hover:text-paper"
+                    active
+                      ? "bg-amber text-navy-deep"
+                      : "text-paper/65 hover:bg-white/5 hover:text-paper",
                   )}
                 >
                   <Icon className="h-4 w-4" aria-hidden />

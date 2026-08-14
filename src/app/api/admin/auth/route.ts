@@ -1,6 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
-import { verifyPasscode, getSessionToken, ADMIN_COOKIE_NAME } from "@/lib/admin-auth";
+import {
+  verifyPasscode,
+  getSessionToken,
+  ADMIN_COOKIE_NAME,
+} from "@/lib/admin-auth";
 
 const schema = z.object({ passcode: z.string().min(1) });
 
@@ -9,11 +13,17 @@ export async function POST(req: NextRequest) {
     const json = await req.json().catch(() => null);
     const parsed = schema.safeParse(json);
     if (!parsed.success) {
-      return NextResponse.json({ error: "Passcode is required." }, { status: 400 });
+      return NextResponse.json(
+        { error: "Passcode is required." },
+        { status: 400 },
+      );
     }
 
     if (!verifyPasscode(parsed.data.passcode)) {
-      return NextResponse.json({ error: "Incorrect passcode." }, { status: 401 });
+      return NextResponse.json(
+        { error: "Incorrect passcode." },
+        { status: 401 },
+      );
     }
 
     const res = NextResponse.json({ ok: true });

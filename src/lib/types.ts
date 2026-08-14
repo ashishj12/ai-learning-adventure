@@ -52,7 +52,6 @@ export interface Badge {
 }
 
 export type ProgressStatus = "in_progress" | "completed";
-
 export interface Progress {
   id: string;
   sessionId: string;
@@ -63,14 +62,12 @@ export interface Progress {
   completedAt: string | null;
   updatedAt: string;
 }
-
 export interface BadgeEarned {
   id: string;
   sessionId: string;
   badgeId: string;
   earnedAt: string;
 }
-
 export interface MissionWithMeta extends Mission {
   badge: Badge | null;
   questionCount: number;
@@ -79,8 +76,11 @@ export interface MissionWithMeta extends Mission {
 }
 
 // ---- AI provider types ----
-
-export type TutorMode = "mission_help" | "ai_only" | "quiz_explanation" | "next_mission";
+export type TutorMode =
+  | "mission_help"
+  | "ai_only"
+  | "quiz_explanation"
+  | "next_mission";
 
 export interface TutorRequest {
   mode: TutorMode;
@@ -94,7 +94,6 @@ export interface TutorRequest {
   isCorrect?: boolean;
   userLevel?: string;
 }
-
 export interface TutorResponse {
   answer: string;
   isMock: boolean;

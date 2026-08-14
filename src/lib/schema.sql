@@ -1,4 +1,4 @@
--- AI Learning Adventure — schema (better-sqlite3, file-based)
+-- AI Learning Adventure — schema (SQLite)
 
 CREATE TABLE IF NOT EXISTS missions (
   id TEXT PRIMARY KEY,

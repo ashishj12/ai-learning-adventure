@@ -1,11 +1,6 @@
 @import "tailwindcss";
 
 :root {
-  /* ---- "Field journal" palette — navy is the dominant chrome color
-     throughout the app (not just the hero); parchment is reserved for
-     content cards ("field notes") inset into it, not the whole page.
-     This is a deliberate departure from the generic warm-cream-page +
-     near-black-SaaS defaults. ---- */
   --navy: #151a33;
   --navy-deep: #10142a;
   --navy-light: #1f2647;
@@ -22,16 +17,14 @@
 
   --background: var(--paper);
   --foreground: var(--ink);
-
-  /* Three type roles: display serif (headlines), body grotesk (UI/copy),
-     and a monospace "field stamp" face for waypoint numbers / coordinate
-     -style labels — the app's recurring signature motif.
-     Uses system-available fonts so the build never depends on external font
-     downloads — swap in next/font/google (Fraunces / Inter / JetBrains Mono)
-     once you have a normal internet connection outside this sandbox. */
-  --font-display: Georgia, "Iowan Old Style", "Palatino Linotype", ui-serif, serif;
-  --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, Helvetica, Arial, sans-serif;
-  --font-stamp: ui-monospace, "SF Mono", "Cascadia Code", "Roboto Mono", Menlo, Consolas, monospace;
+  --font-display:
+    Georgia, "Iowan Old Style", "Palatino Linotype", ui-serif, serif;
+  --font-body:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, Helvetica,
+    Arial, sans-serif;
+  --font-stamp:
+    ui-monospace, "SF Mono", "Cascadia Code", "Roboto Mono", Menlo, Consolas,
+    monospace;
 }
 
 @theme inline {
@@ -67,7 +60,10 @@ body {
   font-family: var(--font-body);
 }
 
-h1, h2, h3, .font-display {
+h1,
+h2,
+h3,
+.font-display {
   font-family: var(--font-display);
 }
 
@@ -76,8 +72,6 @@ h1, h2, h3, .font-display {
   letter-spacing: 0.06em;
 }
 
-/* Eyebrow / waypoint-coordinate style label used across hero, mission map,
-   and section headers — the recurring "field stamp" signature. */
 .stamp-label {
   font-family: var(--font-stamp);
   font-size: 0.6875rem;
@@ -86,8 +80,6 @@ h1, h2, h3, .font-display {
   text-transform: uppercase;
 }
 
-/* Stitched / dashed trail rule, used for the mission map path and as a
-   section divider — the visual thread tying hero and map together. */
 .trail-rule {
   background-image: repeating-linear-gradient(
     to bottom,
@@ -109,8 +101,6 @@ h1, h2, h3, .font-display {
   );
 }
 
-/* Subtle paper grain so content cards read as "field notes" rather than
-   flat generic cards — restrained, single low-opacity noise layer. */
 .paper-grain {
   position: relative;
 }
@@ -121,21 +111,23 @@ h1, h2, h3, .font-display {
   pointer-events: none;
   border-radius: inherit;
   opacity: 0.5;
-  background-image: radial-gradient(circle at 1px 1px, rgba(32, 29, 26, 0.05) 1px, transparent 0);
+  background-image: radial-gradient(
+    circle at 1px 1px,
+    rgba(32, 29, 26, 0.05) 1px,
+    transparent 0
+  );
   background-size: 14px 14px;
 }
 
-/* Halftone dot texture — borrowed from the wireframe reference's blueprint
-   imagery, re-themed here as an engraved-map texture rather than raw photo
-   halftone. Used for hero/showcase graphic panels, not general decoration. */
 .halftone {
-  background-image: radial-gradient(circle, currentColor 1.4px, transparent 1.4px);
+  background-image: radial-gradient(
+    circle,
+    currentColor 1.4px,
+    transparent 1.4px
+  );
   background-size: 9px 9px;
 }
 
-/* Crosshair corner marks — the wireframe reference's blueprint corner ticks,
-   re-read here as literal map/coordinate marks to match the waypoint system.
-   Apply to a `relative` container; four ticks appear at its corners. */
 .map-corners {
   position: relative;
 }
@@ -176,8 +168,12 @@ h1, h2, h3, .font-display {
 
 /* Continuous horizontal marquee, used sparingly for the concept ticker. */
 @keyframes marquee-scroll {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
 }
 .marquee-track {
   animation: marquee-scroll 32s linear infinite;
@@ -188,7 +184,9 @@ h1, h2, h3, .font-display {
   }
 }
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
+  *,
+  *::before,
+  *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;

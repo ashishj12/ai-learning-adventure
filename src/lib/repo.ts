@@ -84,14 +84,22 @@ export const MissionRepo = {
   // so unpublished/disabled content is never reachable even via a direct URL).
   listAll(learnerVisible: boolean): Mission[] {
     const rows = learnerVisible
-      ? db.prepare("SELECT * FROM missions WHERE isPublished = 1 AND isEnabled = 1 ORDER BY sortOrder ASC").all()
+      ? db
+          .prepare(
+            "SELECT * FROM missions WHERE isPublished = 1 AND isEnabled = 1 ORDER BY sortOrder ASC",
+          )
+          .all()
       : db.prepare("SELECT * FROM missions ORDER BY sortOrder ASC").all();
     return rows.map(rowToMission);
   },
 
   getBySlug(slug: string, learnerVisible: boolean): Mission | null {
     const row = learnerVisible
-      ? db.prepare("SELECT * FROM missions WHERE slug = ? AND isPublished = 1 AND isEnabled = 1").get(slug)
+      ? db
+          .prepare(
+            "SELECT * FROM missions WHERE slug = ? AND isPublished = 1 AND isEnabled = 1",
+          )
+          .get(slug)
       : db.prepare("SELECT * FROM missions WHERE slug = ?").get(slug);
     return row ? rowToMission(row) : null;
   },
@@ -105,7 +113,7 @@ export const MissionRepo = {
     const id = newId("mission");
     db.prepare(
       `INSERT INTO missions (id, slug, title, level, objective, lessonContent, scenario, sortOrder, isPublished, isEnabled)
-       VALUES (@id, @slug, @title, @level, @objective, @lessonContent, @scenario, @sortOrder, @isPublished, @isEnabled)`
+       VALUES (@id, @slug, @title, @level, @objective, @lessonContent, @scenario, @sortOrder, @isPublished, @isEnabled)`,
     ).run({
       id,
       slug: input.slug,
@@ -128,7 +136,7 @@ export const MissionRepo = {
     db.prepare(
       `UPDATE missions SET slug=@slug, title=@title, level=@level, objective=@objective,
        lessonContent=@lessonContent, scenario=@scenario, sortOrder=@sortOrder,
-       isPublished=@isPublished, isEnabled=@isEnabled, updatedAt=datetime('now') WHERE id=@id`
+       isPublished=@isPublished, isEnabled=@isEnabled, updatedAt=datetime('now') WHERE id=@id`,
     ).run({
       id,
       slug: merged.slug,
@@ -155,8 +163,16 @@ export const MissionRepo = {
 export const QuestionRepo = {
   listByMission(missionId: string, learnerVisible: boolean): QuizQuestion[] {
     const rows = learnerVisible
-      ? db.prepare("SELECT * FROM quiz_questions WHERE missionId = ? AND isEnabled = 1 ORDER BY sortOrder ASC").all(missionId)
-      : db.prepare("SELECT * FROM quiz_questions WHERE missionId = ? ORDER BY sortOrder ASC").all(missionId);
+      ? db
+          .prepare(
+            "SELECT * FROM quiz_questions WHERE missionId = ? AND isEnabled = 1 ORDER BY sortOrder ASC",
+          )
+          .all(missionId)
+      : db
+          .prepare(
+            "SELECT * FROM quiz_questions WHERE missionId = ? ORDER BY sortOrder ASC",
+          )
+          .all(missionId);
     return rows.map(rowToQuestion);
   },
 
@@ -169,7 +185,7 @@ export const QuestionRepo = {
     const id = newId("q");
     db.prepare(
       `INSERT INTO quiz_questions (id, missionId, type, question, options, correctAnswer, explanation, isEnabled, sortOrder)
-       VALUES (@id, @missionId, @type, @question, @options, @correctAnswer, @explanation, @isEnabled, @sortOrder)`
+       VALUES (@id, @missionId, @type, @question, @options, @correctAnswer, @explanation, @isEnabled, @sortOrder)`,
     ).run({
       id,
       missionId: input.missionId,
@@ -184,13 +200,16 @@ export const QuestionRepo = {
     return this.getById(id)!;
   },
 
-  update(id: string, input: Partial<Omit<QuizQuestion, "id">>): QuizQuestion | null {
+  update(
+    id: string,
+    input: Partial<Omit<QuizQuestion, "id">>,
+  ): QuizQuestion | null {
     const existing = this.getById(id);
     if (!existing) return null;
     const merged = { ...existing, ...input };
     db.prepare(
       `UPDATE quiz_questions SET missionId=@missionId, type=@type, question=@question, options=@options,
-       correctAnswer=@correctAnswer, explanation=@explanation, isEnabled=@isEnabled, sortOrder=@sortOrder WHERE id=@id`
+       correctAnswer=@correctAnswer, explanation=@explanation, isEnabled=@isEnabled, sortOrder=@sortOrder WHERE id=@id`,
     ).run({
       id,
       missionId: merged.missionId,
@@ -216,8 +235,16 @@ export const QuestionRepo = {
 export const FlashcardRepo = {
   listByMission(missionId: string, learnerVisible: boolean): Flashcard[] {
     const rows = learnerVisible
-      ? db.prepare("SELECT * FROM flashcards WHERE missionId = ? AND isEnabled = 1 ORDER BY sortOrder ASC").all(missionId)
-      : db.prepare("SELECT * FROM flashcards WHERE missionId = ? ORDER BY sortOrder ASC").all(missionId);
+      ? db
+          .prepare(
+            "SELECT * FROM flashcards WHERE missionId = ? AND isEnabled = 1 ORDER BY sortOrder ASC",
+          )
+          .all(missionId)
+      : db
+          .prepare(
+            "SELECT * FROM flashcards WHERE missionId = ? ORDER BY sortOrder ASC",
+          )
+          .all(missionId);
     return rows.map(rowToFlashcard);
   },
 
@@ -230,7 +257,7 @@ export const FlashcardRepo = {
     const id = newId("fc");
     db.prepare(
       `INSERT INTO flashcards (id, missionId, concept, definition, example, tip, isEnabled, sortOrder)
-       VALUES (@id, @missionId, @concept, @definition, @example, @tip, @isEnabled, @sortOrder)`
+       VALUES (@id, @missionId, @concept, @definition, @example, @tip, @isEnabled, @sortOrder)`,
     ).run({
       id,
       missionId: input.missionId,
@@ -250,7 +277,7 @@ export const FlashcardRepo = {
     const merged = { ...existing, ...input };
     db.prepare(
       `UPDATE flashcards SET missionId=@missionId, concept=@concept, definition=@definition,
-       example=@example, tip=@tip, isEnabled=@isEnabled, sortOrder=@sortOrder WHERE id=@id`
+       example=@example, tip=@tip, isEnabled=@isEnabled, sortOrder=@sortOrder WHERE id=@id`,
     ).run({
       id,
       missionId: merged.missionId,
@@ -277,7 +304,9 @@ export const BadgeRepo = {
     return (db.prepare("SELECT * FROM badges").all() as any[]).map(rowToBadge);
   },
   getByMission(missionId: string): Badge | null {
-    const row = db.prepare("SELECT * FROM badges WHERE missionId = ?").get(missionId);
+    const row = db
+      .prepare("SELECT * FROM badges WHERE missionId = ?")
+      .get(missionId);
     return row ? rowToBadge(row) : null;
   },
   getById(id: string): Badge | null {
@@ -287,7 +316,7 @@ export const BadgeRepo = {
   create(input: Omit<Badge, "id">): Badge {
     const id = newId("badge");
     db.prepare(
-      `INSERT INTO badges (id, missionId, name, description, icon) VALUES (@id, @missionId, @name, @description, @icon)`
+      `INSERT INTO badges (id, missionId, name, description, icon) VALUES (@id, @missionId, @name, @description, @icon)`,
     ).run({ id, ...input });
     return this.getById(id)!;
   },
@@ -295,7 +324,9 @@ export const BadgeRepo = {
     const existing = this.getById(id);
     if (!existing) return null;
     const merged = { ...existing, ...input };
-    db.prepare(`UPDATE badges SET missionId=@missionId, name=@name, description=@description, icon=@icon WHERE id=@id`).run(merged);
+    db.prepare(
+      `UPDATE badges SET missionId=@missionId, name=@name, description=@description, icon=@icon WHERE id=@id`,
+    ).run(merged);
     return this.getById(id);
   },
   remove(id: string): boolean {
@@ -308,11 +339,17 @@ export const BadgeRepo = {
 
 export const ProgressRepo = {
   listBySession(sessionId: string): Progress[] {
-    return (db.prepare("SELECT * FROM progress WHERE sessionId = ?").all(sessionId) as any[]).map(rowToProgress);
+    return (
+      db
+        .prepare("SELECT * FROM progress WHERE sessionId = ?")
+        .all(sessionId) as any[]
+    ).map(rowToProgress);
   },
 
   get(sessionId: string, missionId: string): Progress | null {
-    const row = db.prepare("SELECT * FROM progress WHERE sessionId = ? AND missionId = ?").get(sessionId, missionId);
+    const row = db
+      .prepare("SELECT * FROM progress WHERE sessionId = ? AND missionId = ?")
+      .get(sessionId, missionId);
     return row ? rowToProgress(row) : null;
   },
 
@@ -324,11 +361,14 @@ export const ProgressRepo = {
     quizTotal?: number | null;
   }): Progress {
     const existing = this.get(input.sessionId, input.missionId);
-    const completedAt = input.status === "completed" ? new Date().toISOString() : existing?.completedAt ?? null;
+    const completedAt =
+      input.status === "completed"
+        ? new Date().toISOString()
+        : (existing?.completedAt ?? null);
     if (existing) {
       db.prepare(
         `UPDATE progress SET status=@status, quizScore=@quizScore, quizTotal=@quizTotal, completedAt=@completedAt, updatedAt=datetime('now')
-         WHERE sessionId=@sessionId AND missionId=@missionId`
+         WHERE sessionId=@sessionId AND missionId=@missionId`,
       ).run({
         sessionId: input.sessionId,
         missionId: input.missionId,
@@ -340,7 +380,7 @@ export const ProgressRepo = {
     } else {
       db.prepare(
         `INSERT INTO progress (id, sessionId, missionId, status, quizScore, quizTotal, completedAt)
-         VALUES (@id, @sessionId, @missionId, @status, @quizScore, @quizTotal, @completedAt)`
+         VALUES (@id, @sessionId, @missionId, @status, @quizScore, @quizTotal, @completedAt)`,
       ).run({
         id: newId("progress"),
         sessionId: input.sessionId,
@@ -359,13 +399,17 @@ export const ProgressRepo = {
 
 export const BadgeEarnedRepo = {
   listBySession(sessionId: string): BadgeEarned[] {
-    return db.prepare("SELECT * FROM badges_earned WHERE sessionId = ?").all(sessionId) as any[];
+    return db
+      .prepare("SELECT * FROM badges_earned WHERE sessionId = ?")
+      .all(sessionId) as any[];
   },
   award(sessionId: string, badgeId: string): { awarded: boolean } {
     // Idempotent: UNIQUE(sessionId, badgeId) means a duplicate insert is safely ignored.
     const id = newId("be");
     const res = db
-      .prepare("INSERT OR IGNORE INTO badges_earned (id, sessionId, badgeId) VALUES (?, ?, ?)")
+      .prepare(
+        "INSERT OR IGNORE INTO badges_earned (id, sessionId, badgeId) VALUES (?, ?, ?)",
+      )
       .run(id, sessionId, badgeId);
     return { awarded: res.changes > 0 };
   },
@@ -373,12 +417,21 @@ export const BadgeEarnedRepo = {
 
 // ---------- Composite: mission list with metadata for the map/dashboard ----------
 
-export function listMissionsWithMeta(sessionId: string | null, learnerVisible: boolean): MissionWithMeta[] {
+export function listMissionsWithMeta(
+  sessionId: string | null,
+  learnerVisible: boolean,
+): MissionWithMeta[] {
   const missionList = MissionRepo.listAll(learnerVisible);
   return missionList.map((m) => {
     const badge = BadgeRepo.getByMission(m.id);
-    const questionCount = QuestionRepo.listByMission(m.id, learnerVisible).length;
-    const flashcardCount = FlashcardRepo.listByMission(m.id, learnerVisible).length;
+    const questionCount = QuestionRepo.listByMission(
+      m.id,
+      learnerVisible,
+    ).length;
+    const flashcardCount = FlashcardRepo.listByMission(
+      m.id,
+      learnerVisible,
+    ).length;
     const progress = sessionId ? ProgressRepo.get(sessionId, m.id) : null;
     return { ...m, badge, questionCount, flashcardCount, progress };
   });

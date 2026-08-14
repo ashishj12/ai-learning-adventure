@@ -51,7 +51,8 @@ export const useSessionStore = create<SessionState>()(
       hasStartedJourney: false,
       lastVisitedMissionSlug: null,
       startJourney: () => set({ hasStartedJourney: true }),
-      setLastVisitedMission: (slug: string) => set({ lastVisitedMissionSlug: slug }),
+      setLastVisitedMission: (slug: string) =>
+        set({ lastVisitedMissionSlug: slug }),
     }),
     {
       name: "aila-session",
@@ -60,9 +61,12 @@ export const useSessionStore = create<SessionState>()(
       // just fall back to the freshly generated in-memory default state.
       onRehydrateStorage: () => (state, error) => {
         if (error) {
-          console.warn("Session storage was corrupted, starting a fresh session.", error);
+          console.warn(
+            "Session storage was corrupted, starting a fresh session.",
+            error,
+          );
         }
       },
-    }
-  )
+    },
+  ),
 );

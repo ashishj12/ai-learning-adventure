@@ -7,6 +7,9 @@ export async function GET() {
     return NextResponse.json({ badges });
   } catch (err) {
     console.error("[/api/badges] GET failed:", err);
-    return NextResponse.json({ error: "Failed to load badges." }, { status: 500 });
+    return NextResponse.json(
+      { error: "Failed to load badges." },
+      { status: 500 },
+    );
   }
 }

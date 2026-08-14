@@ -1,12 +1,20 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
-import { ProgressRepo, BadgeEarnedRepo, BadgeRepo, MissionRepo } from "@/lib/repo";
+import {
+  ProgressRepo,
+  BadgeEarnedRepo,
+  BadgeRepo,
+  MissionRepo,
+} from "@/lib/repo";
 
 export async function GET(req: NextRequest) {
   try {
     const sessionId = req.nextUrl.searchParams.get("sessionId");
     if (!sessionId) {
-      return NextResponse.json({ error: "sessionId is required." }, { status: 400 });
+      return NextResponse.json(
+        { error: "sessionId is required." },
+        { status: 400 },
+      );
     }
     const progress = ProgressRepo.listBySession(sessionId);
     const earned = BadgeEarnedRepo.listBySession(sessionId);
@@ -17,7 +25,10 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ progress, badgesEarned });
   } catch (err) {
     console.error("[/api/progress] GET failed:", err);
-    return NextResponse.json({ error: "Failed to load progress." }, { status: 500 });
+    return NextResponse.json(
+      { error: "Failed to load progress." },
+      { status: 500 },
+    );
   }
 }
 
@@ -34,16 +45,28 @@ export async function POST(req: NextRequest) {
     const json = await req.json().catch(() => null);
     const parsed = postSchema.safeParse(json);
     if (!parsed.success) {
-      return NextResponse.json({ error: "Invalid request.", details: parsed.error.flatten() }, { status: 400 });
+      return NextResponse.json(
+        { error: "Invalid request.", details: parsed.error.flatten() },
+        { status: 400 },
+      );
     }
     const { sessionId, missionId, status, quizScore, quizTotal } = parsed.data;
 
     const mission = MissionRepo.getById(missionId);
     if (!mission || !mission.isPublished || !mission.isEnabled) {
-      return NextResponse.json({ error: "Mission not found." }, { status: 404 });
+      return NextResponse.json(
+        { error: "Mission not found." },
+        { status: 404 },
+      );
     }
 
-    const progress = ProgressRepo.upsert({ sessionId, missionId, status, quizScore, quizTotal });
+    const progress = ProgressRepo.upsert({
+      sessionId,
+      missionId,
+      status,
+      quizScore,
+      quizTotal,
+    });
 
     let badgeAwarded = false;
     let badge = null;
@@ -58,6 +81,9 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ progress, badgeAwarded, badge });
   } catch (err) {
     console.error("[/api/progress] POST failed:", err);
-    return NextResponse.json({ error: "Failed to save progress." }, { status: 500 });
+    return NextResponse.json(
+      { error: "Failed to save progress." },
+      { status: 500 },
+    );
   }
 }

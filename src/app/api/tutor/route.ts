@@ -20,7 +20,10 @@ export async function POST(req: NextRequest) {
     const json = await req.json().catch(() => null);
     const parsed = bodySchema.safeParse(json);
     if (!parsed.success) {
-      return NextResponse.json({ error: "Invalid request.", details: parsed.error.flatten() }, { status: 400 });
+      return NextResponse.json(
+        { error: "Invalid request.", details: parsed.error.flatten() },
+        { status: 400 },
+      );
     }
 
     // getTutorResponse never throws — it internally falls back to a mock
@@ -32,10 +35,11 @@ export async function POST(req: NextRequest) {
     console.error("[/api/tutor] POST failed unexpectedly:", err);
     return NextResponse.json(
       {
-        answer: "(Sample response — the tutor is temporarily unavailable) I can still help once you retry — try asking again in a moment.",
+        answer:
+          "(Sample response — the tutor is temporarily unavailable) I can still help once you retry — try asking again in a moment.",
         isMock: true,
       },
-      { status: 200 }
+      { status: 200 },
     );
   }
 }

@@ -41,7 +41,10 @@ export function TutorPanel({
   const firedInitial = useRef(false);
 
   useEffect(() => {
-    scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: "smooth" });
+    scrollRef.current?.scrollTo({
+      top: scrollRef.current.scrollHeight,
+      behavior: "smooth",
+    });
   }, [messages, loading]);
 
   useEffect(() => {
@@ -62,18 +65,28 @@ export function TutorPanel({
       const res = await fetch("/api/tutor", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ mode, question, missionSlug, missionTitle, missionContent }),
+        body: JSON.stringify({
+          mode,
+          question,
+          missionSlug,
+          missionTitle,
+          missionContent,
+        }),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data?.error || "Tutor request failed");
-      setMessages((m) => [...m, { role: "assistant", content: data.answer, isMock: data.isMock }]);
+      setMessages((m) => [
+        ...m,
+        { role: "assistant", content: data.answer, isMock: data.isMock },
+      ]);
     } catch {
       setErrored(true);
       setMessages((m) => [
         ...m,
         {
           role: "assistant",
-          content: "I couldn't reach the tutor just now. Please try asking again in a moment.",
+          content:
+            "I couldn't reach the tutor just now. Please try asking again in a moment.",
           isMock: true,
         },
       ]);
@@ -83,17 +96,26 @@ export function TutorPanel({
   }
 
   return (
-    <div className={cn("paper-grain flex flex-col rounded-2xl border border-ink/10 bg-white shadow-sm", className)}>
+    <div
+      className={cn(
+        "paper-grain flex flex-col rounded-2xl border border-ink/10 bg-white shadow-sm",
+        className,
+      )}
+    >
       <div className="flex items-center gap-2 border-b border-ink/10 px-4 py-3">
         <Sparkles className="h-4 w-4 text-amber-dark" aria-hidden />
         <span className="stamp-label text-ink/70">AI Tutor</span>
       </div>
 
-      <div ref={scrollRef} className="max-h-80 min-h-[9rem] flex-1 space-y-3 overflow-y-auto px-4 py-4">
+      <div
+        ref={scrollRef}
+        className="max-h-80 min-h-[9rem] flex-1 space-y-3 overflow-y-auto px-4 py-4"
+      >
         {messages.length === 0 && (
           <div className="space-y-2">
             <p className="text-sm text-ink/50">
-              Ask me to explain this topic, give a hint, or suggest what to learn next.
+              Ask me to explain this topic, give a hint, or suggest what to
+              learn next.
             </p>
             {suggestedPrompts.length > 0 && (
               <div className="flex flex-wrap gap-2">
@@ -117,12 +139,17 @@ export function TutorPanel({
               key={i}
               initial={{ opacity: 0, y: 6 }}
               animate={{ opacity: 1, y: 0 }}
-              className={cn("flex", m.role === "user" ? "justify-end" : "justify-start")}
+              className={cn(
+                "flex",
+                m.role === "user" ? "justify-end" : "justify-start",
+              )}
             >
               <div
                 className={cn(
                   "max-w-[85%] rounded-2xl px-4 py-2.5 text-sm leading-relaxed",
-                  m.role === "user" ? "bg-navy text-parchment" : "bg-parchment-dim text-ink"
+                  m.role === "user"
+                    ? "bg-navy text-parchment"
+                    : "bg-parchment-dim text-ink",
                 )}
               >
                 {m.content}

@@ -8,6 +8,9 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ missions });
   } catch (err) {
     console.error("[/api/missions] GET failed:", err);
-    return NextResponse.json({ error: "Failed to load missions." }, { status: 500 });
+    return NextResponse.json(
+      { error: "Failed to load missions." },
+      { status: 500 },
+    );
   }
 }

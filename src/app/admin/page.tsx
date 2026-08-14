@@ -3,12 +3,27 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { Eye, Loader2, LogOut, Plus, ShieldCheck, Trash2, Pencil, ExternalLink } from "lucide-react";
+import {
+  Eye,
+  Loader2,
+  LogOut,
+  Plus,
+  ShieldCheck,
+  Trash2,
+  Pencil,
+  ExternalLink,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAdminAuth } from "@/lib/use-admin-auth";
 import type { Mission, MissionLevel } from "@/lib/types";
 
-const LEVELS: MissionLevel[] = ["Beginner", "Basic Understanding", "Applied Practice", "Responsible Use", "Builder Mindset"];
+const LEVELS: MissionLevel[] = [
+  "Beginner",
+  "Basic Understanding",
+  "Applied Practice",
+  "Responsible Use",
+  "Builder Mindset",
+];
 
 const emptyForm = {
   slug: "",
@@ -45,7 +60,9 @@ export default function AdminPage() {
       const data = await res.json();
       setMissions(data.missions);
     } catch {
-      setLoadError("Couldn't load missions. Check your connection and try again.");
+      setLoadError(
+        "Couldn't load missions. Check your connection and try again.",
+      );
     }
   }
 
@@ -91,7 +108,9 @@ export default function AdminPage() {
     setSaving(true);
     setFormError(null);
     try {
-      const url = editingId ? `/api/admin/missions/${editingId}` : "/api/admin/missions";
+      const url = editingId
+        ? `/api/admin/missions/${editingId}`
+        : "/api/admin/missions";
       const method = editingId ? "PATCH" : "POST";
       const res = await fetch(url, {
         method,
@@ -106,7 +125,9 @@ export default function AdminPage() {
       setFormOpen(false);
       await loadMissions();
     } catch {
-      setFormError("Couldn't reach the server. Check your connection and try again.");
+      setFormError(
+        "Couldn't reach the server. Check your connection and try again.",
+      );
     } finally {
       setSaving(false);
     }
@@ -115,7 +136,11 @@ export default function AdminPage() {
   async function toggleField(m: Mission, field: "isPublished" | "isEnabled") {
     // Optimistic update, rolled back on failure so the UI never silently drifts from the server.
     const prev = missions;
-    setMissions((cur) => cur?.map((x) => (x.id === m.id ? { ...x, [field]: !x[field] } : x)) ?? cur);
+    setMissions(
+      (cur) =>
+        cur?.map((x) => (x.id === m.id ? { ...x, [field]: !x[field] } : x)) ??
+        cur,
+    );
     try {
       const res = await fetch(`/api/admin/missions/${m.id}`, {
         method: "PATCH",
@@ -130,9 +155,16 @@ export default function AdminPage() {
   }
 
   async function handleDelete(m: Mission) {
-    if (!confirm(`Delete "${m.title}"? This also removes its quiz questions, flashcards, and badge. This can't be undone.`)) return;
+    if (
+      !confirm(
+        `Delete "${m.title}"? This also removes its quiz questions, flashcards, and badge. This can't be undone.`,
+      )
+    )
+      return;
     try {
-      const res = await fetch(`/api/admin/missions/${m.id}`, { method: "DELETE" });
+      const res = await fetch(`/api/admin/missions/${m.id}`, {
+        method: "DELETE",
+      });
       if (!res.ok) throw new Error("failed");
       await loadMissions();
     } catch {
@@ -145,7 +177,8 @@ export default function AdminPage() {
   if (status === "checking") {
     return (
       <div className="flex items-center justify-center gap-2 py-24 text-ink/50">
-        <Loader2 className="h-5 w-5 animate-spin" aria-hidden /> Checking access…
+        <Loader2 className="h-5 w-5 animate-spin" aria-hidden /> Checking
+        access…
       </div>
     );
   }
@@ -154,8 +187,12 @@ export default function AdminPage() {
     return (
       <div className="mx-auto flex max-w-sm flex-col items-center px-6 py-24">
         <ShieldCheck className="h-8 w-8 text-navy" aria-hidden />
-        <h1 className="mt-3 font-display text-2xl font-semibold text-navy">Content Management</h1>
-        <p className="mt-1 text-center text-sm text-ink/60">Enter the admin passcode to manage missions, quizzes, and flashcards.</p>
+        <h1 className="mt-3 font-display text-2xl font-semibold text-navy">
+          Content Management
+        </h1>
+        <p className="mt-1 text-center text-sm text-ink/60">
+          Enter the admin passcode to manage missions, quizzes, and flashcards.
+        </p>
         <form onSubmit={handleLogin} className="mt-6 w-full space-y-3">
           <input
             type="password"
@@ -165,12 +202,24 @@ export default function AdminPage() {
             aria-label="Admin passcode"
             className="focus-ring w-full rounded-xl border border-ink/15 px-4 py-2.5 text-sm outline-none"
           />
-          {loginError && <p className="text-sm text-coral-dark">{loginError}</p>}
-          <Button type="submit" className="w-full" disabled={loggingIn || !passcode}>
-            {loggingIn ? <Loader2 className="h-4 w-4 animate-spin" aria-hidden /> : "Enter"}
+          {loginError && (
+            <p className="text-sm text-coral-dark">{loginError}</p>
+          )}
+          <Button
+            type="submit"
+            className="w-full"
+            disabled={loggingIn || !passcode}
+          >
+            {loggingIn ? (
+              <Loader2 className="h-4 w-4 animate-spin" aria-hidden />
+            ) : (
+              "Enter"
+            )}
           </Button>
         </form>
-        <p className="mt-4 text-xs text-ink/40">Default passcode is set via ADMIN_PASSCODE in your .env file.</p>
+        <p className="mt-4 text-xs text-ink/40">
+          Default passcode is set via ADMIN_PASSCODE in your .env file.
+        </p>
       </div>
     );
   }
@@ -179,8 +228,12 @@ export default function AdminPage() {
     <div className="mx-auto max-w-4xl px-6 py-10">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="font-display text-3xl font-semibold text-navy">Content Management</h1>
-          <p className="mt-1 text-sm text-ink/60">Add, edit, publish, and preview missions.</p>
+          <h1 className="font-display text-3xl font-semibold text-navy">
+            Content Management
+          </h1>
+          <p className="mt-1 text-sm text-ink/60">
+            Add, edit, publish, and preview missions.
+          </p>
         </div>
         <div className="flex gap-2">
           <Button variant="outline" size="sm" onClick={openCreate}>
@@ -225,10 +278,20 @@ export default function AdminPage() {
                   <td className="px-4 py-3 font-medium text-ink">{m.title}</td>
                   <td className="px-4 py-3 text-ink/60">{m.level}</td>
                   <td className="px-4 py-3">
-                    <ToggleChip on={m.isPublished} onClick={() => toggleField(m, "isPublished")} onLabel="Published" offLabel="Draft" />
+                    <ToggleChip
+                      on={m.isPublished}
+                      onClick={() => toggleField(m, "isPublished")}
+                      onLabel="Published"
+                      offLabel="Draft"
+                    />
                   </td>
                   <td className="px-4 py-3">
-                    <ToggleChip on={m.isEnabled} onClick={() => toggleField(m, "isEnabled")} onLabel="Enabled" offLabel="Disabled" />
+                    <ToggleChip
+                      on={m.isEnabled}
+                      onClick={() => toggleField(m, "isEnabled")}
+                      onLabel="Enabled"
+                      offLabel="Disabled"
+                    />
                   </td>
                   <td className="px-4 py-3">
                     <div className="flex justify-end gap-1">
@@ -247,10 +310,18 @@ export default function AdminPage() {
                       >
                         <ExternalLink className="h-4 w-4" aria-hidden />
                       </Link>
-                      <button onClick={() => openEdit(m)} className="focus-ring rounded-lg p-2 text-ink/50 hover:bg-ink/5 hover:text-ink" title="Edit mission">
+                      <button
+                        onClick={() => openEdit(m)}
+                        className="focus-ring rounded-lg p-2 text-ink/50 hover:bg-ink/5 hover:text-ink"
+                        title="Edit mission"
+                      >
                         <Pencil className="h-4 w-4" aria-hidden />
                       </button>
-                      <button onClick={() => handleDelete(m)} className="focus-ring rounded-lg p-2 text-coral-dark/70 hover:bg-coral/10 hover:text-coral-dark" title="Delete mission">
+                      <button
+                        onClick={() => handleDelete(m)}
+                        className="focus-ring rounded-lg p-2 text-coral-dark/70 hover:bg-coral/10 hover:text-coral-dark"
+                        title="Delete mission"
+                      >
                         <Trash2 className="h-4 w-4" aria-hidden />
                       </button>
                     </div>
@@ -263,17 +334,27 @@ export default function AdminPage() {
       )}
 
       {formOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-navy/40 p-4" onClick={() => setFormOpen(false)}>
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-navy/40 p-4"
+          onClick={() => setFormOpen(false)}
+        >
           <motion.div
             initial={{ opacity: 0, scale: 0.96 }}
             animate={{ opacity: 1, scale: 1 }}
             onClick={(e) => e.stopPropagation()}
             className="max-h-[85vh] w-full max-w-lg overflow-y-auto rounded-2xl bg-white p-6 shadow-lg"
           >
-            <h2 className="font-display text-lg font-semibold text-navy">{editingId ? "Edit mission" : "New mission"}</h2>
+            <h2 className="font-display text-lg font-semibold text-navy">
+              {editingId ? "Edit mission" : "New mission"}
+            </h2>
             <form onSubmit={handleSave} className="mt-4 space-y-3">
               <Field label="Title">
-                <input required value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} className={inputClass} />
+                <input
+                  required
+                  value={form.title}
+                  onChange={(e) => setForm({ ...form, title: e.target.value })}
+                  className={inputClass}
+                />
               </Field>
               <Field label="Slug (lowercase, hyphens only)">
                 <input
@@ -285,38 +366,93 @@ export default function AdminPage() {
                 />
               </Field>
               <Field label="Level">
-                <select value={form.level} onChange={(e) => setForm({ ...form, level: e.target.value as MissionLevel })} className={inputClass}>
+                <select
+                  value={form.level}
+                  onChange={(e) =>
+                    setForm({ ...form, level: e.target.value as MissionLevel })
+                  }
+                  className={inputClass}
+                >
                   {LEVELS.map((l) => (
-                    <option key={l} value={l}>{l}</option>
+                    <option key={l} value={l}>
+                      {l}
+                    </option>
                   ))}
                 </select>
               </Field>
               <Field label="Objective">
-                <input required value={form.objective} onChange={(e) => setForm({ ...form, objective: e.target.value })} className={inputClass} />
+                <input
+                  required
+                  value={form.objective}
+                  onChange={(e) =>
+                    setForm({ ...form, objective: e.target.value })
+                  }
+                  className={inputClass}
+                />
               </Field>
               <Field label="Lesson content (use blank lines between paragraphs)">
-                <textarea required rows={5} value={form.lessonContent} onChange={(e) => setForm({ ...form, lessonContent: e.target.value })} className={inputClass} />
+                <textarea
+                  required
+                  rows={5}
+                  value={form.lessonContent}
+                  onChange={(e) =>
+                    setForm({ ...form, lessonContent: e.target.value })
+                  }
+                  className={inputClass}
+                />
               </Field>
               <Field label="Example / scenario">
-                <textarea required rows={2} value={form.scenario} onChange={(e) => setForm({ ...form, scenario: e.target.value })} className={inputClass} />
+                <textarea
+                  required
+                  rows={2}
+                  value={form.scenario}
+                  onChange={(e) =>
+                    setForm({ ...form, scenario: e.target.value })
+                  }
+                  className={inputClass}
+                />
               </Field>
               <div className="flex gap-4">
                 <label className="flex items-center gap-2 text-sm text-ink/70">
-                  <input type="checkbox" checked={form.isPublished} onChange={(e) => setForm({ ...form, isPublished: e.target.checked })} />
+                  <input
+                    type="checkbox"
+                    checked={form.isPublished}
+                    onChange={(e) =>
+                      setForm({ ...form, isPublished: e.target.checked })
+                    }
+                  />
                   Published
                 </label>
                 <label className="flex items-center gap-2 text-sm text-ink/70">
-                  <input type="checkbox" checked={form.isEnabled} onChange={(e) => setForm({ ...form, isEnabled: e.target.checked })} />
+                  <input
+                    type="checkbox"
+                    checked={form.isEnabled}
+                    onChange={(e) =>
+                      setForm({ ...form, isEnabled: e.target.checked })
+                    }
+                  />
                   Enabled
                 </label>
               </div>
 
-              {formError && <p className="text-sm text-coral-dark">{formError}</p>}
+              {formError && (
+                <p className="text-sm text-coral-dark">{formError}</p>
+              )}
 
               <div className="flex justify-end gap-2 pt-2">
-                <Button type="button" variant="ghost" onClick={() => setFormOpen(false)}>Cancel</Button>
+                <Button
+                  type="button"
+                  variant="ghost"
+                  onClick={() => setFormOpen(false)}
+                >
+                  Cancel
+                </Button>
                 <Button type="submit" disabled={saving}>
-                  {saving ? <Loader2 className="h-4 w-4 animate-spin" aria-hidden /> : "Save"}
+                  {saving ? (
+                    <Loader2 className="h-4 w-4 animate-spin" aria-hidden />
+                  ) : (
+                    "Save"
+                  )}
                 </Button>
               </div>
             </form>
@@ -327,23 +463,44 @@ export default function AdminPage() {
   );
 }
 
-const inputClass = "focus-ring w-full rounded-lg border border-ink/15 px-3 py-2 text-sm outline-none";
+const inputClass =
+  "focus-ring w-full rounded-lg border border-ink/15 px-3 py-2 text-sm outline-none";
 
-function Field({ label, children }: { label: string; children: React.ReactNode }) {
+function Field({
+  label,
+  children,
+}: {
+  label: string;
+  children: React.ReactNode;
+}) {
   return (
     <label className="block">
-      <span className="mb-1 block text-xs font-medium text-ink/60">{label}</span>
+      <span className="mb-1 block text-xs font-medium text-ink/60">
+        {label}
+      </span>
       {children}
     </label>
   );
 }
 
-function ToggleChip({ on, onClick, onLabel, offLabel }: { on: boolean; onClick: () => void; onLabel: string; offLabel: string }) {
+function ToggleChip({
+  on,
+  onClick,
+  onLabel,
+  offLabel,
+}: {
+  on: boolean;
+  onClick: () => void;
+  onLabel: string;
+  offLabel: string;
+}) {
   return (
     <button
       onClick={onClick}
       className={`focus-ring rounded-full px-2.5 py-1 text-xs font-medium transition-colors ${
-        on ? "bg-teal/15 text-teal-dark hover:bg-teal/25" : "bg-ink/10 text-ink/50 hover:bg-ink/15"
+        on
+          ? "bg-teal/15 text-teal-dark hover:bg-teal/25"
+          : "bg-ink/10 text-ink/50 hover:bg-ink/15"
       }`}
     >
       {on ? onLabel : offLabel}

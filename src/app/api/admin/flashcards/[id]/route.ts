@@ -13,33 +13,58 @@ const patchSchema = z.object({
   sortOrder: z.number().int().optional(),
 });
 
-export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
-  if (!isAdminRequest(req)) return NextResponse.json({ error: "Unauthorized." }, { status: 401 });
+export async function PATCH(
+  req: NextRequest,
+  { params }: { params: Promise<{ id: string }> },
+) {
+  if (!isAdminRequest(req))
+    return NextResponse.json({ error: "Unauthorized." }, { status: 401 });
   try {
     const { id } = await params;
     const json = await req.json().catch(() => null);
     const parsed = patchSchema.safeParse(json);
     if (!parsed.success) {
-      return NextResponse.json({ error: "Invalid flashcard data.", details: parsed.error.flatten() }, { status: 400 });
+      return NextResponse.json(
+        { error: "Invalid flashcard data.", details: parsed.error.flatten() },
+        { status: 400 },
+      );
     }
     const updated = FlashcardRepo.update(id, parsed.data);
-    if (!updated) return NextResponse.json({ error: "Flashcard not found." }, { status: 404 });
+    if (!updated)
+      return NextResponse.json(
+        { error: "Flashcard not found." },
+        { status: 404 },
+      );
     return NextResponse.json({ flashcard: updated });
   } catch (err) {
     console.error("[/api/admin/flashcards/[id]] PATCH failed:", err);
-    return NextResponse.json({ error: "Failed to update flashcard." }, { status: 500 });
+    return NextResponse.json(
+      { error: "Failed to update flashcard." },
+      { status: 500 },
+    );
   }
 }
 
-export async function DELETE(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
-  if (!isAdminRequest(req)) return NextResponse.json({ error: "Unauthorized." }, { status: 401 });
+export async function DELETE(
+  req: NextRequest,
+  { params }: { params: Promise<{ id: string }> },
+) {
+  if (!isAdminRequest(req))
+    return NextResponse.json({ error: "Unauthorized." }, { status: 401 });
   try {
     const { id } = await params;
     const ok = FlashcardRepo.remove(id);
-    if (!ok) return NextResponse.json({ error: "Flashcard not found." }, { status: 404 });
+    if (!ok)
+      return NextResponse.json(
+        { error: "Flashcard not found." },
+        { status: 404 },
+      );
     return NextResponse.json({ ok: true });
   } catch (err) {
     console.error("[/api/admin/flashcards/[id]] DELETE failed:", err);
-    return NextResponse.json({ error: "Failed to delete flashcard." }, { status: 500 });
+    return NextResponse.json(
+      { error: "Failed to delete flashcard." },
+      { status: 500 },
+    );
   }
 }

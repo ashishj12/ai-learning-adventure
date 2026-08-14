@@ -17,7 +17,7 @@ const topicExplainers: Record<string, string> = {
     "Good prompts are specific: state the task, audience, tone, and format you want. Adding an example of the style you're after usually improves results a lot.",
   "tokens-and-context":
     "Tokens are the text chunks a model reads and writes, and the context window is the max number of tokens it can consider at once — input and output combined.",
-  "hallucinations":
+  hallucinations:
     "A hallucination is confident-sounding AI output that's actually false or made up. It happens because the model optimizes for fluent text, not verified truth — always double check specific facts.",
   "bias-and-responsible-ai":
     "AI models can inherit bias from their training data. Responsible use means staying aware of that, testing high-stakes decisions for fairness, and keeping a human in the loop.",
@@ -52,24 +52,35 @@ export function getMockTutorResponse(req: TutorRequest): TutorResponse {
   switch (req.mode) {
     case "mission_help":
     case "ai_only": {
-      const topicHint = (req.missionSlug ? topicExplainers[req.missionSlug] : undefined) ?? matchTopicFromText(req.question);
+      const topicHint =
+        (req.missionSlug ? topicExplainers[req.missionSlug] : undefined) ??
+        matchTopicFromText(req.question);
       const base =
         topicHint ??
         "That's a great question about AI. In short: AI systems learn patterns from data and use them to generate predictions or content — try opening a mission for a focused, step-by-step explanation of this topic.";
       return { answer: MOCK_PREFIX + base, isMock: true };
     }
     case "quiz_explanation": {
-      const verdict = req.isCorrect ? "Nice work — that's correct." : "Not quite.";
+      const verdict = req.isCorrect
+        ? "Nice work — that's correct."
+        : "Not quite.";
       const answer = `${verdict} The key idea here: ${req.correctAnswer ?? "review the mission's lesson content"} is the concept being tested. Revisit the mission's lesson section for a fuller explanation, then try a similar question to reinforce it.`;
       return { answer: MOCK_PREFIX + answer, isMock: true };
     }
     case "next_mission": {
       return {
-        answer: MOCK_PREFIX + "Nice progress! A good next step is to continue to the next mission in the map — each one builds on the last, so following the suggested order works well.",
+        answer:
+          MOCK_PREFIX +
+          "Nice progress! A good next step is to continue to the next mission in the map — each one builds on the last, so following the suggested order works well.",
         isMock: true,
       };
     }
     default:
-      return { answer: MOCK_PREFIX + "I can help explain AI concepts, give hints, or suggest what to learn next — what would you like to know?", isMock: true };
+      return {
+        answer:
+          MOCK_PREFIX +
+          "I can help explain AI concepts, give hints, or suggest what to learn next — what would you like to know?",
+        isMock: true,
+      };
   }
 }

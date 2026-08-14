@@ -6,7 +6,10 @@ const SECRET = process.env.ADMIN_COOKIE_SECRET || "dev-only-secret-change-me";
 export const ADMIN_COOKIE_NAME = "aila_admin";
 
 function expectedToken() {
-  return crypto.createHmac("sha256", SECRET).update(ADMIN_PASSCODE).digest("hex");
+  return crypto
+    .createHmac("sha256", SECRET)
+    .update(ADMIN_PASSCODE)
+    .digest("hex");
 }
 
 export function verifyPasscode(candidate: string): boolean {

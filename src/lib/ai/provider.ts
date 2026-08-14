@@ -6,7 +6,9 @@ const GROQ_MODEL = process.env.GROQ_MODEL || "llama-3.1-8b-instant";
 const REQUEST_TIMEOUT_MS = 8000;
 
 function buildSystemPrompt(req: TutorRequest): string {
-  const levelNote = req.userLevel ? ` The learner's current level is "${req.userLevel}" — tailor depth accordingly.` : "";
+  const levelNote = req.userLevel
+    ? ` The learner's current level is "${req.userLevel}" — tailor depth accordingly.`
+    : "";
   const base =
     "You are a friendly, encouraging AI literacy tutor inside a gamified learning app called AI Learning Adventure. " +
     "You help beginners understand AI concepts (prompts, LLMs, hallucinations, tokens, bias, RAG, etc). " +
@@ -80,7 +82,9 @@ async function callGroq(req: TutorRequest): Promise<string> {
  * Guarantees a response is always returned — falls back to a clearly-labeled
  * mock on missing key, timeout, rate limit, or any other failure.
  */
-export async function getTutorResponse(req: TutorRequest): Promise<TutorResponse> {
+export async function getTutorResponse(
+  req: TutorRequest,
+): Promise<TutorResponse> {
   try {
     const answer = await callGroq(req);
     return { answer, isMock: false };
