@@ -1,0 +1,19 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ai-learning-adventure
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: development
+      ADMIN_PASSCODE: adventure-admin
+      ADMIN_COOKIE_SECRET: dev-only-secret-change-me
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - app_data:/app/data
+
+volumes:
+  app_data:

@@ -157,19 +157,21 @@ This is intended for local development and demos, not for production security.
 
 ## Local development
 
-### Install dependencies
+### Option 1: Run locally with Node
+
+#### Install dependencies
 
 ```bash
 npm install
 ```
 
-### Seed the content database
+#### Seed the content database
 
 ```bash
 npm run db:seed
 ```
 
-### Start the app
+#### Start the app
 
 ```bash
 npm run dev
@@ -180,6 +182,41 @@ Then open:
 ```text
 http://localhost:3000
 ```
+
+### Option 2: Run with Docker
+
+Create your local environment file from the example and adjust values if needed:
+
+```bash
+cp .env.example .env.local
+```
+
+Then start the app with Docker Compose:
+
+```bash
+docker compose up --build
+```
+
+This will:
+
+- build the app container
+- install dependencies
+- seed the SQLite database
+- start the Next.js dev server on port 3000
+
+Open:
+
+```text
+http://localhost:3000
+```
+
+To stop it:
+
+```bash
+docker compose down
+```
+
+The SQLite data is stored in the Docker volume so your seeded content persists between restarts.
 
 ### Production build
 
