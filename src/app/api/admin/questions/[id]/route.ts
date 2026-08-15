@@ -3,16 +3,27 @@ import { z } from "zod";
 import { isAdminRequest } from "@/lib/admin-auth";
 import { QuestionRepo } from "@/lib/repo";
 
-const patchSchema = z.object({
-  missionId: z.string().min(1).optional(),
-  type: z.enum(["mcq", "true_false", "scenario"]).optional(),
-  question: z.string().min(1).max(1000).optional(),
-  options: z.array(z.string().min(1)).min(2).max(6).optional(),
-  correctAnswer: z.string().min(1).optional(),
-  explanation: z.string().min(1).max(1000).optional(),
-  isEnabled: z.boolean().optional(),
-  sortOrder: z.number().int().optional(),
-});
+const patchSchema = z
+  .object({
+    missionId: z.string().min(1).optional(),
+    type: z.enum(["mcq", "true_false", "scenario"]).optional(),
+    question: z.string().min(1).max(500).optional(),
+    options: z.array(z.string().min(1).max(200)).min(2).max(8).optional(),
+    correctAnswer: z.string().min(1).max(200).optional(),
+    explanation: z.string().min(1).max(1000).optional(),
+    isEnabled: z.boolean().optional(),
+    sortOrder: z.number().int().optional(),
+  })
+  .refine(
+    (data) =>
+      !data.options || !data.correctAnswer
+        ? true
+        : data.options.includes(data.correctAnswer),
+    {
+      message: "correctAnswer must exactly match one of the provided options.",
+      path: ["correctAnswer"],
+    },
+  );
 
 export async function PATCH(
   req: NextRequest,
@@ -30,23 +41,12 @@ export async function PATCH(
         { status: 400 },
       );
     }
-    const existing = QuestionRepo.getById(id);
-    if (!existing)
+    const updated = QuestionRepo.update(id, parsed.data);
+    if (!updated)
       return NextResponse.json(
         { error: "Question not found." },
         { status: 404 },
       );
-
-    const nextOptions = parsed.data.options ?? existing.options;
-    const nextCorrect = parsed.data.correctAnswer ?? existing.correctAnswer;
-    if (!nextOptions.includes(nextCorrect)) {
-      return NextResponse.json(
-        { error: "correctAnswer must be one of the options." },
-        { status: 400 },
-      );
-    }
-
-    const updated = QuestionRepo.update(id, parsed.data);
     return NextResponse.json({ question: updated });
   } catch (err) {
     console.error("[/api/admin/questions/[id]] PATCH failed:", err);

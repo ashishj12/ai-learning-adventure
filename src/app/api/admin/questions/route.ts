@@ -3,16 +3,21 @@ import { z } from "zod";
 import { isAdminRequest } from "@/lib/admin-auth";
 import { QuestionRepo, MissionRepo } from "@/lib/repo";
 
-const questionSchema = z.object({
-  missionId: z.string().min(1),
-  type: z.enum(["mcq", "true_false", "scenario"]),
-  question: z.string().min(1).max(1000),
-  options: z.array(z.string().min(1)).min(2).max(6),
-  correctAnswer: z.string().min(1),
-  explanation: z.string().min(1).max(1000),
-  isEnabled: z.boolean(),
-  sortOrder: z.number().int(),
-});
+const questionSchema = z
+  .object({
+    missionId: z.string().min(1),
+    type: z.enum(["mcq", "true_false", "scenario"]),
+    question: z.string().min(1).max(500),
+    options: z.array(z.string().min(1).max(200)).min(2).max(8),
+    correctAnswer: z.string().min(1).max(200),
+    explanation: z.string().min(1).max(1000),
+    isEnabled: z.boolean(),
+    sortOrder: z.number().int(),
+  })
+  .refine((data) => data.options.includes(data.correctAnswer), {
+    message: "correctAnswer must exactly match one of the provided options.",
+    path: ["correctAnswer"],
+  });
 
 export async function GET(req: NextRequest) {
   if (!isAdminRequest(req))
@@ -51,12 +56,6 @@ export async function POST(req: NextRequest) {
       return NextResponse.json(
         { error: "Mission not found." },
         { status: 404 },
-      );
-    }
-    if (!parsed.data.options.includes(parsed.data.correctAnswer)) {
-      return NextResponse.json(
-        { error: "correctAnswer must be one of the provided options." },
-        { status: 400 },
       );
     }
     const question = QuestionRepo.create(parsed.data);
